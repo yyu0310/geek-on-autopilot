@@ -1,0 +1,21 @@
+# geek-on-autopilot
+
+> Five Claude Code slash commands for automating repetitive workflow steps.
+
+Five custom slash commands for Claude Code users who want to reduce friction in daily workflows. Each command is a standalone `.md` file — symlink to `~/.claude/commands/` to activate.
+
+## Commands
+
+- [/latest](latest.md): Forces web search before answering time-sensitive questions. Treats training data as a stale candidate, not a conclusion. Prioritizes official docs over generic search results.
+- [/claude-docs](claude-docs.md): Routes questions to the correct Claude official docs page. Routing table covers 20+ topics with direct URLs. Distinguishes between feature questions (docs) and availability questions (news + web search).
+- [/no-ai-trace](no-ai-trace.md): Scans text against 17 AI writing anti-patterns (buzzword stacking, negation openers, em dashes, rhetorical self-answers, etc.). Reports each violation with suggested rewrite, then gives an overall tone verdict.
+- [/session-review](session-review.md): Four-block session wrap-up: key takeaways, open items, memory suggestions, doc check. Output capped at 35 lines.
+- [/marp-export](marp-export.md): Pre-export QA for Marp presentations. Scans for draft markers and missing images, then generates PDF via npx marp-cli.
+
+## Install
+
+```bash
+git clone https://github.com/yyu0310/geek-on-autopilot.git
+cd geek-on-autopilot
+for f in *.md; do ln -sf "$(pwd)/$f" ~/.claude/commands/"$f"; done
+```
