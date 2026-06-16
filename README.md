@@ -11,6 +11,7 @@ Five custom slash commands that make Claude Code more useful.
 - AI-generated text has a recognizable AI voice that needs polishing
 - Sessions end without a clear record of what was decided or done
 - No standardized QA before exporting Marp presentations
+- Pandoc's default fonts break Chinese-English mixed PDFs
 
 ## Commands
 
@@ -22,6 +23,7 @@ Five custom slash commands that make Claude Code more useful.
 | `/session-review` | Four-block session wrap-up in under 35 lines |
 | `/marp-export` | QA check and PDF export for Marp presentations |
 | `/open-source-skill` | Full SOP for cleaning and publishing a skill to your open-source repo |
+| `/md-to-pdf` | Converts Markdown to PDF with a bundled PingFang TC font template |
 
 ## Install
 
@@ -120,6 +122,19 @@ Requires one-time setup: fill in your repo's local path and GitHub URL at the to
 ```
 /open-source-skill session-review
 /open-source-skill                  # start from the currently open skill file
+```
+
+---
+
+### `/md-to-pdf`
+
+Converts Markdown to PDF in two steps: pandoc builds a DOCX using the bundled `reference_pingfang.docx` template, then LibreOffice converts it to PDF. Before converting, scans for common Pandoc format traps (numbered lists missing a leading blank line). The font template is included in the repo — set one path after cloning and the command works immediately.
+
+Requires: pandoc, LibreOffice (`brew install pandoc && brew install --cask libreoffice`)
+
+```
+/md-to-pdf                    # Convert the currently open .md file
+/md-to-pdf /path/to/file.md
 ```
 
 ## License

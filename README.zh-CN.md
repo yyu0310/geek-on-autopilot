@@ -11,6 +11,7 @@
 - AI 写出来的文字有 AI 味，需要手动润色
 - Session 结束后不知道自己做了什么，没有留下记录
 - Marp 演示文稿导出前没有统一的 QA 流程
+- Pandoc 默认字体不支持中英混排，导出 PDF 字体很丑
 
 ## 命令一览
 
@@ -22,6 +23,7 @@
 | `/session-review` | Session 收尾四模块盘点，35 行以内 |
 | `/marp-export` | Marp 演示文稿 QA 检查后导出 PDF |
 | `/open-source-skill` | 安全扫描、清理、推入开源 repo 全流程 |
+| `/md-to-pdf` | MD 转 PDF，套用 PingFang TC 字体模板 |
 
 ## 安装
 
@@ -120,6 +122,19 @@ Marp 演示文稿提交前 QA + 导出 PDF：
 ```
 /open-source-skill session-review
 /open-source-skill                  # 从 IDE 当前打开的 skill 开始
+```
+
+---
+
+### `/md-to-pdf`
+
+将 Markdown 文件转为 PDF，字体使用 PingFang TC（苹方-繁），中英文混排都好看。流程分两步：先用 pandoc 转 DOCX，再用 LibreOffice 转 PDF。转换前会先扫描格式陷阱（序号列表前是否有空行），避免 pandoc 解析出错。`reference_pingfang.docx` 字体模板已包含在 repo 中，clone 后设置一个路径即可使用。
+
+需要：pandoc、LibreOffice（`brew install pandoc && brew install --cask libreoffice`）
+
+```
+/md-to-pdf                    # 转换 IDE 当前打开的 .md 文件
+/md-to-pdf /path/to/file.md
 ```
 
 ## 许可证

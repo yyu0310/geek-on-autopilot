@@ -12,6 +12,7 @@ Five custom slash commands for Claude Code users who want to reduce friction in 
 - [/session-review](session-review.md): Four-block session wrap-up: key takeaways, open items, memory suggestions, doc check. Output capped at 35 lines.
 - [/marp-export](marp-export.md): Pre-export QA for Marp presentations. Scans for draft markers and missing images, then generates PDF via npx marp-cli.
 - [/open-source-skill](open-source-skill.md): Full SOP for open-sourcing a personal skill — security scan, cleanup, README update (3 languages), llms.txt, commit and push. Requires one-time path setup.
+- [/md-to-pdf](md-to-pdf.md): Converts Markdown to PDF via pandoc + LibreOffice, using a bundled PingFang TC reference template for clean CJK typography.
 
 ## Install
 
