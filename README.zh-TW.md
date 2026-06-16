@@ -23,7 +23,7 @@
 | `/session-review` | Session 收尾四區塊盤點，35 行以內 |
 | `/marp-export` | Marp 簡報 QA 檢查後匯出 PDF |
 | `/open-source-skill` | 資安掃描、清理、推入開源 repo 全流程 |
-| `/md-to-pdf` | MD 轉 PDF，套用 PingFang TC 字體模板 |
+| `/local-md-to-pdf` | MD 轉 PDF，套用 PingFang TC 字體模板 |
 
 ## 安裝
 
@@ -126,15 +126,17 @@ Marp 簡報交稿前 QA + 匯出 PDF：
 
 ---
 
-### `/md-to-pdf`
+### `/local-md-to-pdf`
 
-把 Markdown 檔轉成 PDF，字體用 PingFang TC（蘋方-繁），中英文混排都好看。流程是兩步：先用 pandoc 轉 DOCX，再用 LibreOffice 轉 PDF。轉換前會先掃格式陷阱（序號列表前是否有空行），避免 pandoc 解析出錯。`reference_pingfang.docx` 字體模板已包含在 repo 中，clone 後設定一個路徑即可使用。
+把 Markdown 檔轉成 PDF，字體用 PingFang TC（蘋方-繁）。PingFang TC 是中英混排 PDF 渲染 bug 最少的字體，Mac 生態免費內建，Windows / Linux 需另購。流程是兩步：先用 pandoc 轉 DOCX，再用 LibreOffice 轉 PDF。轉換前會先掃格式陷阱（序號列表前是否有空行），避免 pandoc 解析出錯。`reference_pingfang.docx` 字體模板已包含在 repo 中，clone 後設定一個路徑即可使用。
+
+全程本地轉換，不依賴任何第三方服務，文件內容不會傳出去，適合有隱私顧慮的工作文件。
 
 需要：pandoc、LibreOffice（`brew install pandoc && brew install --cask libreoffice`）
 
 ```
-/md-to-pdf                    # 轉換 IDE 當前開啟的 .md 檔
-/md-to-pdf /path/to/file.md
+/local-md-to-pdf                    # 轉換 IDE 當前開啟的 .md 檔
+/local-md-to-pdf /path/to/file.md
 ```
 
 ## 授權
