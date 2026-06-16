@@ -21,6 +21,7 @@
 | `/no-ai-trace` | 扫描 AI 写作痕迹，17 条规则逐条检查 |
 | `/session-review` | Session 收尾四模块盘点，35 行以内 |
 | `/marp-export` | Marp 演示文稿 QA 检查后导出 PDF |
+| `/open-source-skill` | 安全扫描、清理、推入开源 repo 全流程 |
 
 ## 安装
 
@@ -106,6 +107,19 @@ Marp 演示文稿提交前 QA + 导出 PDF：
 ```
 /marp-export                   # 导出 IDE 当前打开的 .md 文件
 /marp-export /path/to/file.md
+```
+
+---
+
+### `/open-source-skill`
+
+将个人 skill 开源的完整 SOP。自动扫描个人路径、账号识别符、外部依赖等六类安全问题，列出问题等确认，清理后更新三语 README 和 llms.txt，最后 commit + push。
+
+需要一次性设置：在 skill 文件顶部填入你的 repo 本地路径和 GitHub URL。
+
+```
+/open-source-skill session-review
+/open-source-skill                  # 从 IDE 当前打开的 skill 开始
 ```
 
 ## 许可证

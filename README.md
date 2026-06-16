@@ -21,6 +21,7 @@ Five custom slash commands that make Claude Code more useful.
 | `/no-ai-trace` | Scans text against 17 AI writing anti-patterns |
 | `/session-review` | Four-block session wrap-up in under 35 lines |
 | `/marp-export` | QA check and PDF export for Marp presentations |
+| `/open-source-skill` | Full SOP for cleaning and publishing a skill to your open-source repo |
 
 ## Install
 
@@ -106,6 +107,19 @@ Requires: Node.js (uses `npx` to run `@marp-team/marp-cli`)
 ```
 /marp-export                   # Export the currently open .md file
 /marp-export /path/to/file.md
+```
+
+---
+
+### `/open-source-skill`
+
+Full SOP for open-sourcing a personal skill. Runs a six-category security scan (personal paths, email addresses, account identifiers, external file dependencies, and more), lists all issues for confirmation, then handles cleanup, updates all three README files and llms.txt, and commits and pushes.
+
+Requires one-time setup: fill in your repo's local path and GitHub URL at the top of the skill file.
+
+```
+/open-source-skill session-review
+/open-source-skill                  # start from the currently open skill file
 ```
 
 ## License

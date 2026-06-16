@@ -22,7 +22,15 @@ Each `.md` file in the root becomes a `/command-name` slash command when symlink
 
 ## Adding a new command
 
-1. Create a `.md` file in the root directory.
-2. Write the command as a self-contained prompt — no external file dependencies.
-3. Update all three README files with the new command's description.
-4. Add a one-line entry to `llms.txt`.
+Use `/open-source-skill` to handle the full workflow automatically:
+1. Security scan (personal paths, account identifiers, external dependencies)
+2. Cleanup with confirmation
+3. Updates all three README files and `llms.txt`
+4. Commit and push
+
+Manual steps if needed:
+1. Create a `.md` file in the root directory — self-contained, no external file dependencies.
+2. Update all three README files: add a row to the commands table and a new detail section.
+3. Add a one-line entry to `llms.txt`.
+
+**Configuration-required commands.** `open-source-skill.md` contains placeholder values (`REPO_LOCAL_PATH`, `GITHUB_URL`) that users must fill in before first use. This is intentional — it's a template that adapts to any geek-on-autopilot fork.
