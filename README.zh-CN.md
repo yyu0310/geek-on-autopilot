@@ -23,7 +23,7 @@
 | `/session-review` | Session 收尾四模块盘点，35 行以内 |
 | `/marp-export` | Marp 演示文稿 QA 检查后导出 PDF |
 | `/open-source-skill` | 安全扫描、清理、推入开源 repo 全流程 |
-| `/local-md-to-pdf` | MD 转 PDF，套用 PingFang TC 字体模板 |
+| `/md-to-pdf` | MD 转 PDF，套用 PingFang TC 字体模板 |
 
 ## 安装
 
@@ -126,7 +126,7 @@ Marp 演示文稿提交前 QA + 导出 PDF：
 
 ---
 
-### `/local-md-to-pdf`
+### `/md-to-pdf`
 
 将 Markdown 文件转为 PDF，字体使用 PingFang TC（苹方-繁）。PingFang TC 是中英混排 PDF 渲染 bug 最少的字体，Mac 生态免费内置，Windows / Linux 需另购。流程分两步：先用 pandoc 转 DOCX，再用 LibreOffice 转 PDF。转换前会先扫描格式陷阱（序号列表前是否有空行），避免 pandoc 解析出错。`reference_pingfang.docx` 字体模板已包含在 repo 中，clone 后设置一个路径即可使用。
 
@@ -135,8 +135,8 @@ Marp 演示文稿提交前 QA + 导出 PDF：
 需要：pandoc、LibreOffice（`brew install pandoc && brew install --cask libreoffice`）
 
 ```
-/local-md-to-pdf                    # 转换 IDE 当前打开的 .md 文件
-/local-md-to-pdf /path/to/file.md
+/md-to-pdf                    # 转换 IDE 当前打开的 .md 文件
+/md-to-pdf /path/to/file.md
 ```
 
 ## 许可证

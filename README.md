@@ -23,7 +23,7 @@ Five custom slash commands that make Claude Code more useful.
 | `/session-review` | Four-block session wrap-up in under 35 lines |
 | `/marp-export` | QA check and PDF export for Marp presentations |
 | `/open-source-skill` | Full SOP for cleaning and publishing a skill to your open-source repo |
-| `/local-md-to-pdf` | Converts Markdown to PDF with a bundled PingFang TC font template |
+| `/md-to-pdf` | Converts Markdown to PDF with a bundled PingFang TC font template |
 
 ## Install
 
@@ -126,7 +126,7 @@ Requires one-time setup: fill in your repo's local path and GitHub URL at the to
 
 ---
 
-### `/local-md-to-pdf`
+### `/md-to-pdf`
 
 Converts Markdown to PDF using PingFang TC, the font with the fewest rendering bugs for Chinese-English mixed documents. It ships free with macOS — Windows and Linux users need to source it separately. Conversion runs in two steps: pandoc builds a DOCX using the bundled `reference_pingfang.docx` template, then LibreOffice converts it to PDF. Before converting, scans for common Pandoc format traps (numbered lists missing a leading blank line). The font template is included in the repo — set one path after cloning and the command works immediately.
 
@@ -135,8 +135,8 @@ Runs entirely on your machine. No third-party services, no document data sent an
 Requires: pandoc, LibreOffice (`brew install pandoc && brew install --cask libreoffice`)
 
 ```
-/local-md-to-pdf                    # Convert the currently open .md file
-/local-md-to-pdf /path/to/file.md
+/md-to-pdf                    # Convert the currently open .md file
+/md-to-pdf /path/to/file.md
 ```
 
 ## License
