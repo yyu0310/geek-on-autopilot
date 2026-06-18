@@ -24,6 +24,7 @@ Five custom slash commands that make Claude Code more useful.
 | `/marp-export` | QA check and PDF export for Marp presentations |
 | `/open-source-skill` | Full SOP for cleaning and publishing a skill to your open-source repo |
 | `/md-to-pdf` | Converts Markdown to PDF with a bundled PingFang TC font template |
+| `/recover-from-log` | Recovers deleted or mangled file content from Claude Code session logs |
 
 ## Install
 
@@ -137,6 +138,18 @@ Requires: pandoc, LibreOffice (`brew install pandoc && brew install --cask libre
 ```
 /md-to-pdf                    # Convert the currently open .md file
 /md-to-pdf /path/to/file.md
+```
+
+---
+
+### `/recover-from-log`
+
+When a Claude Code operation (a `/simplify`, an accidental delete, a bad edit) mangles your file, this recovers the original from the session logs. Every session's `.jsonl` stores the full transcript, including the content of every file Read and the `old_string` of every Edit — so the pre-change version is still in there. The skill diagnoses which session and operation caused the damage, extracts the original, and restores it surgically: it keeps the good changes instead of blindly reverting the whole thing.
+
+It also handles a sharp trap. A skill's own name (like `simplify`) is injected into every session's skill list, so a bare grep matches almost every session. The skill matches the actual command invocation instead, and excludes the current session before pinning the culprit.
+
+```
+/recover-from-log [filename]
 ```
 
 ## License

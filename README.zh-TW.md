@@ -24,6 +24,7 @@
 | `/marp-export` | Marp 簡報 QA 檢查後匯出 PDF |
 | `/open-source-skill` | 資安掃描、清理、推入開源 repo 全流程 |
 | `/md-to-pdf` | MD 轉 PDF，套用 PingFang TC 字體模板 |
+| `/recover-from-log` | 從 session log 救回被改壞或誤刪的檔案內容 |
 
 ## 安裝
 
@@ -137,6 +138,18 @@ Marp 簡報交稿前 QA + 匯出 PDF：
 ```
 /md-to-pdf                    # 轉換 IDE 當前開啟的 .md 檔
 /md-to-pdf /path/to/file.md
+```
+
+---
+
+### `/recover-from-log`
+
+當 Claude Code 的某次操作（`/simplify`、誤刪、誤改）把檔案弄壞時，從 session log 撈回原始內容還原。每個 session 的 `.jsonl` 都存了完整對話，包含每次 Read 過的檔案原文和每次 Edit 的 `old_string`，被改之前的版本還在裡面。skill 會診斷是哪個 session、哪次操作造成的，撈出原版，外科手術式還原：保留好的修正，而不是無腦整段回退。
+
+它也處理一個尖銳的陷阱。skill 名稱（例如 `simplify`）會被注入到每個 session 的 skill 清單，裸 grep 幾乎會比中所有 session。這個 skill 改成比中實際的指令呼叫，並排除當前 session，才鎖定真正的兇手。
+
+```
+/recover-from-log [檔名]
 ```
 
 ## 授權
