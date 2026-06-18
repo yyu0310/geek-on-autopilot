@@ -1,4 +1,4 @@
-# CLAUDE.md
+# AGENTS.md
 
 This repo contains Claude Code custom slash commands. Each `.md` file is a standalone command — no shared dependencies, no build step.
 
