@@ -173,6 +173,12 @@ git push
 
 確認 push 成功後回報：GITHUB_URL
 
+Push 成功後，更新 memory 裡的指令數：
+```
+~/.claude/projects/.../memory/reference_geek_on_autopilot.md
+```
+把指令總數 +1（例如「7 個 slash commands」→「8 個」）。
+
 ---
 
 ## 附錄：不適合開源的 skill 特徵
