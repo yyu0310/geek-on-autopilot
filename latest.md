@@ -1,34 +1,34 @@
-強制用網路即時資訊回答問題，禁止只靠訓練資料。適用於 AI 前沿技術、工具功能迭代、版本支援性等任何時效敏感的問題。
+Answer questions from live information on the web. Never rely on training data alone. Use this for anything time-sensitive: frontier AI, tool feature changes, version support, pricing.
 
-用法：
-- `/latest [問題]` — 搜尋指定問題
-- `/latest` — 沒帶問題時，對話中最近一個時效敏感的問題就是目標
+Usage:
+- `/latest [question]` — search the given question
+- `/latest` — with no question, the target is the most recent time-sensitive question in the conversation
 
-核心原則：
-- 訓練資料有截止日，AI 領域的工具、模型、API 幾乎每週都在變，**訓練資料裡的答案一律視為過時候選，不是結論**
-- 就算自認知道答案，也必須先搜尋驗證，再輸出
-- 如果是 Claude 自家功能的問題，優先改用 `/claude-docs` 的官方文件路由
+Core principles:
+- Training data has a cutoff. AI tools, models, and APIs change almost weekly, so **treat any answer from training data as a stale candidate, not the conclusion.**
+- Even when you think you know the answer, search and verify before you reply.
+- For questions about Claude's own features, route to `/claude-docs` and its official-docs path instead.
 
-步驟：
+Steps:
 
-1. 拆解問題，列出需要驗證的時效敏感點（版本號、支援狀態、價格、是否已發布、是否已棄用）
+1. Break the question down and list the time-sensitive points to verify (version numbers, support status, pricing, whether something shipped, whether something is deprecated).
 
-2. 問題涉及特定工具/產品時，**優先直奔它的官方文檔**，不要只做泛用網搜：
-   - 先確定官方文檔站在哪（不確定就 WebSearch `[工具名] official docs`）
-   - 試抓 `[文檔站]/llms.txt`，很多現代文檔站都有這個索引，grep 關鍵字直接定位頁面
-   - 用 WebFetch 讀對應的文檔頁，找 changelog / release notes / what's new 區塊
-   - GitHub 上的工具直接 WebFetch repo 的 README / CHANGELOG / Releases 頁
+2. When the question is about a specific tool or product, **go straight to its official docs** instead of a generic web search:
+   - Find where the official docs live (if unsure, WebSearch `[tool name] official docs`).
+   - Try fetching `[docs site]/llms.txt`. Many modern docs sites publish this index; grep a keyword to jump straight to the right page.
+   - Use WebFetch to read the matching docs page; look for the changelog / release notes / what's new section.
+   - For tools on GitHub, WebFetch the repo's README / CHANGELOG / Releases page.
 
-3. 沒有明確目標文檔、或文檔不夠新時，WebSearch 補充，關鍵字策略：
-   - 加上當前年份或「latest」過濾舊文
-   - 優先找一手來源：官方文件、官方 blog、GitHub repo、官方 X 帳號
-   - 二手來源（新聞、論壇、教學文）只用來補充，結論必須回到一手來源確認
-   - 同一問題至少換 2 個角度搜尋，避免單一關鍵字漏掉新名稱（產品常改名）
+3. When there's no clear target doc, or the docs aren't current enough, fill in with WebSearch. Keyword strategy:
+   - Add the current year or "latest" to filter out old articles.
+   - Prefer primary sources: official docs, official blog, GitHub repo, official X account.
+   - Use secondary sources (news, forums, tutorials) only to supplement; confirm the conclusion against a primary source.
+   - Search from at least 2 angles for the same question so a single keyword doesn't miss a new name (products get renamed often).
 
-4. 回答時固定包含：
-   - 結論（以搜到的最新資訊為準）
-   - 資訊日期（這個功能/版本是什麼時候發布或更新的）
-   - 來源 URL
-   - 如果和訓練資料的認知不同，主動標出差異（「原本認知是 X，但最新文件顯示 Y」）
+4. Every answer includes:
+   - The conclusion (based on the latest information found).
+   - The date of the information (when this feature or version shipped or was last updated).
+   - The source URL.
+   - If it differs from what training data suggested, flag the difference ("I previously assumed X, but the latest docs show Y").
 
-5. 搜不到確切答案時，誠實說「網路上查不到明確資訊」，不能退回用訓練資料腦補
+5. When you can't find a definite answer, say so honestly ("I couldn't find clear information online"). Don't fall back on training data to fill the gap.

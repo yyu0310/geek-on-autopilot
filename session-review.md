@@ -1,52 +1,52 @@
-Session 結束前的蒸餾與盤點。依序執行以下四個區塊：
+Distill and take stock before a session ends. Run these four blocks in order:
 
-## 1. 精華蒸餾
+## 1. Distill the essentials
 
-回顧整個對話，提取：
-- 本次做出的重要**決策**（選擇了什麼、否定了什麼）
-- 新學到或確認的**知識點**（工具、方法、規則）
-- 對未來工作有影響的**洞察**
+Review the whole conversation and extract:
+- The important **decisions** made this session (what was chosen, what was rejected)
+- **Knowledge** newly learned or confirmed (tools, methods, rules)
+- **Insights** that affect future work
 
-格式：條列，每條一句話，不超過 8 條。
+Format: bullet points, one sentence each, no more than 8 items.
 
-## 2. 遺漏事項盤點
+## 2. Take stock of loose ends
 
-掃描對話中曾提及但沒有執行完成的事：
-- 用戶說「之後再做」、「先跳過」、「等確認」的項目
-- 討論了方向但沒有落地的任務
-- 任何「下次要做」的暗示
+Scan the conversation for things that were mentioned but never finished:
+- Items the user said to "do later", "skip for now", or "wait to confirm"
+- Tasks where a direction was discussed but nothing landed
+- Any hint of "do this next time"
 
-格式：條列，每條標明是「⬜ 待執行」或「❓ 待確認」。
+Format: bullet points, each marked "⬜ to do" or "❓ to confirm".
 
-若沒有遺漏事項，直接說「本次 session 無明顯遺漏事項」，不要硬湊。
+If there are no loose ends, just say "no obvious loose ends this session" — don't force it.
 
-## 3. Memory 建議
+## 3. Memory suggestions
 
-**原則：專案導向的細節不進 memory，只進專案文件。**
+**Principle: project-specific details don't go into memory, only into project files.**
 
-Memory 只記錄以下類型：
-- 用戶的偏好或習慣（user）
-- 跨專案適用的 feedback（feedback）
-- 用戶透露的背景資訊（user）
-- 外部資源的索引位置（reference）
+Memory records only these types:
+- The user's preferences or habits (user)
+- Cross-project feedback (feedback)
+- Background the user revealed about themselves (user)
+- Index pointers to external resources (reference)
 
-若是專案進度、決策、待辦，一律寫進該專案的變更記錄文件，不進 memory。
+Project progress, decisions, and todos all go into that project's change log, not into memory.
 
-格式：條列說明「建議存入哪類 memory」及「一句話摘要」。
+Format: bullet points stating "which memory type to save under" and a one-sentence summary.
 
-若判斷無新內容值得存，說「本次無新 memory 建議」。
+If nothing new is worth saving, say "no new memory suggestions this session".
 
-## 4. 專案文檔檢查
+## 4. Project-docs check
 
-若本次 session 有修改程式碼或執行技術操作，檢查以下文件是否已同步更新：
-- 變更記錄文件（有沒有記錄本次的操作與結果）
-- 架構說明文件（架構或邏輯有沒有改動需要反映）
+If this session changed code or ran technical operations, check whether these files are already up to date:
+- The change log (does it record this session's operations and results)
+- The architecture doc (do any architecture or logic changes need to be reflected)
 
-格式：
-- ✅ 已更新 / ⬜ 未更新 / — 本次無程式碼改動（不需更新）
+Format:
+- ✅ updated / ⬜ not updated / — no code changes this session (no update needed)
 
-若有未更新的文件，直接點名並說明缺少哪些內容，不要只說「建議更新」。
+If a file isn't updated, name it directly and say what's missing — don't just say "consider updating".
 
 ---
 
-輸出語言跟隨用戶本次對話語言。四個區塊加起來不超過 35 行。
+Output language follows the language the user used this session. The four blocks together stay under 35 lines.

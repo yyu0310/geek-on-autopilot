@@ -1,63 +1,63 @@
 ---
 name: med-check
-description: 用最權威的醫界學術資料與研究回答醫療/健康問題，禁止只靠訓練資料；按證據等級作答、標不確定性、附引用
+description: Answer medical/health questions from the most authoritative medical literature and research; never rely on training data alone; answer by evidence level, mark uncertainty, cite sources
 ---
 
-用最權威的醫界學術資料與研究回答醫療/健康問題。核心精神同 `/latest`：**訓練資料裡的醫學知識一律視為過時且可能幻覺的候選，不是結論**，每個主張都必須有「當下實際檢索到的來源」支撐。
+Answer medical and health questions from the most authoritative medical literature and research. Same spirit as `/latest`: **treat the medical knowledge in training data as a stale, possibly hallucinated candidate, not the conclusion** — every claim needs a source you actually retrieved this time.
 
-用法：
-- `/med-check [健康問題]` — 查證指定問題
-- `/med-check` — 沒帶問題時，對話中最近一個醫療/健康問題就是目標
+Usage:
+- `/med-check [health question]` — verify the given question
+- `/med-check` — with no question, the target is the most recent medical/health question in the conversation
 
 ---
 
-## 0. 鐵則（最高優先，違反就重來）
+## 0. Iron rules (highest priority — violate one and start over)
 
-- **禁止用訓練資料當結論。** 每個醫學主張都要有這次檢索到的來源（PMID / 指引 / 權威機構頁）撐著。自認知道也要先查再答。
-- **查不到就直說「查不到足夠證據」**，不腦補、不填空、不用記憶硬湊。
-- **這不是醫療診斷。** 重大決定、開始/停止用藥、症狀惡化，一律請當事人就醫，由醫師判斷。
+- **Never use training data as the conclusion.** Every medical claim needs a source retrieved this time (PMID / guideline / authoritative-body page). Even when you think you know, search first, then answer.
+- **If you can't find it, say "not enough evidence found"** — don't fill the gap from memory.
+- **This is not a medical diagnosis.** For major decisions, starting/stopping medication, or worsening symptoms, tell the person to see a doctor and let a physician decide.
 
-## 1. 紅旗先攔
+## 1. Catch red flags first
 
-問題若涉及急症紅旗（胸痛、呼吸困難、突發單側無力/口齒不清、大量出血、意識改變、劇烈頭痛、自殺意念、孕婦出血/腹痛、嬰幼兒高燒等）→ **先明確建議立即就醫/掛急診**，再談文獻。安全永遠擺在查證前面。
+If the question involves an emergency red flag (chest pain, difficulty breathing, sudden one-sided weakness or slurred speech, heavy bleeding, altered consciousness, severe headache, suicidal ideation, bleeding/abdominal pain in pregnancy, high fever in an infant, etc.) → **first clearly advise seeking immediate care / the ER**, then discuss the literature. Safety always comes before verification.
 
-## 2. 把口語問題轉成可查的臨床問題
+## 2. Turn the plain-language question into a searchable clinical question
 
-用 PICO-lite 拆解：對象（誰）/ 介入（吃什麼、做什麼）/ 比較（跟什麼比）/ 結果（想知道什麼影響）。
-列出 2-3 個檢索角度，不要只搜核心關鍵字（同一 insight 多角度，避免漏掉相關證據）。
+Break it down with PICO-lite: Population (who) / Intervention (taking what, doing what) / Comparison (compared to what) / Outcome (what effect you want to know).
+List 2-3 search angles instead of searching only the core keyword (multiple angles per insight, so you don't miss relevant evidence).
 
-## 3. 強制檢索（證據金字塔，由高到低，至少打到第 3 層）
+## 3. Mandatory retrieval (evidence pyramid, high to low — reach at least level 3)
 
-1. **系統性回顧 / 統合分析** — 最高證據。`WebSearch` 用 `allowed_domains` 鎖 `cochranelibrary.com`，也搜 PubMed 的 systematic review / meta-analysis。
-2. **臨床指引** — UpToDate、NICE（`nice.org.uk`）、USPSTF、各專科醫學會、台灣衛福部/疾管署（`gov.tw`）。看共識，不是單篇研究。
-3. **PubMed 原始研究** — `WebFetch` 打免費 E-utilities API（無金鑰）：
-   - esearch（拿 PMID）：
-     `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term={查詢詞}&retmax=5&sort=relevance&retmode=json`
-   - efetch（拿摘要）：
-     `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id={逗號分隔的PMID}&rettype=abstract&retmode=text`
-   - 研究品質排序：RCT > 世代研究 > 病例對照 > 個案/動物/體外。**標註年份，舊研究示警，小樣本不當定論。**
-   - **PubMed 查詢踩坑（實測）**：① 多個詞 AND 起來 relevance 排序常回離題論文（如查臨床效果卻撈到化學合成），**引用前一定先讀 efetch 摘要確認真的對題**，標題像就引用會出錯。② 別把 `meta-analysis` / `systematic[sb]` 當自由詞硬塞進 term，會回 0 篇；要找高證據等級，改用 WebSearch 搜 Cochrane / 在 PubMed 網站用 Article type 篩，別在 API term 裡硬湊。
-4. **權威衛生機構** — WHO、CDC、FDA、NIH/MedlinePlus（`WebSearch` 鎖這些網域），作為大眾衛教層的佐證。
+1. **Systematic reviews / meta-analyses** — highest evidence. `WebSearch` with `allowed_domains` locked to `cochranelibrary.com`, and search PubMed for systematic reviews / meta-analyses.
+2. **Clinical guidelines** — UpToDate, NICE (`nice.org.uk`), USPSTF, specialty medical societies, national health authorities (`gov` sites). Look at consensus, not a single study.
+3. **PubMed primary research** — `WebFetch` the free E-utilities API (no key needed):
+   - esearch (get PMIDs):
+     `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term={query}&retmax=5&sort=relevance&retmode=json`
+   - efetch (get abstracts):
+     `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id={comma-separated PMIDs}&rettype=abstract&retmode=text`
+   - Study-quality ranking: RCT > cohort > case-control > case report / animal / in vitro. **Note the year, flag old studies, don't treat small samples as settled.**
+   - **PubMed query pitfalls (tested):** ① AND-ing several terms together often returns off-topic papers under relevance sort (e.g. asking about a clinical effect but pulling chemical-synthesis papers). **Always read the efetch abstract to confirm it's on-topic before citing** — citing on a matching title alone will go wrong. ② Don't force `meta-analysis` / `systematic[sb]` as free terms in the query — it returns 0 results. To find high-evidence work, use WebSearch for Cochrane or filter by Article type on the PubMed site, not by stuffing the API term.
+4. **Authoritative health bodies** — WHO, CDC, FDA, NIH/MedlinePlus (`WebSearch` locked to these domains), as public-health-level corroboration.
 
-過程中把實際打的 esearch / efetch URL 印出來，讓檢索可被檢查、可重現。
+Print the actual esearch / efetch URLs you call, so the retrieval is checkable and reproducible.
 
-## 4. 綜合與分級
+## 4. Synthesize and grade
 
-每個結論標一個證據等級標籤：
-- ✅ **有實證** — 高品質研究或指引一致支持
-- ⚠️ **證據不足** — 只有小樣本/初步研究/動物實驗
-- ❓ **證據互相矛盾** — 研究或指引彼此衝突，講清楚分歧在哪
+Tag each conclusion with an evidence level:
+- ✅ **Supported** — high-quality studies or guidelines agree
+- ⚠️ **Insufficient evidence** — only small samples / preliminary studies / animal experiments
+- ❓ **Conflicting evidence** — studies or guidelines disagree; spell out where the split is
 
-附上共識度（多個指引是否一致）、樣本規模、年份。**禁止把單篇小研究講成定論。**
+Include the level of consensus (do multiple guidelines agree), sample size, and year. **Never present a single small study as settled.**
 
-## 5. 輸出格式（精簡，給自己看的，不灌水）
+## 5. Output format (concise, for your own use, no padding)
 
-1. **直接回答** + 證據等級標籤
-2. **關鍵證據** 2-4 條，每條附來源（PMID 連結 / 指引名稱 / 機構頁）
-3. **不確定 / 爭議點**（如果有）
-4. **何時該就醫** — 什麼情況下別自己判斷，去看醫師
-5. 一行免責：此為文獻整理，非醫療診斷
+1. **Direct answer** + evidence-level tag
+2. **Key evidence**, 2-4 points, each with a source (PMID link / guideline name / agency page)
+3. **Uncertainty / points of dispute** (if any)
+4. **When to see a doctor** — situations where you shouldn't self-judge
+5. One-line disclaimer: this is a literature summary, not a medical diagnosis
 
-## 6. 搜不到時
+## 6. When you can't find it
 
-誠實說「目前檢索不到足夠的高品質證據」，可以說明搜了哪些來源、為什麼沒結果，但**絕不退回用訓練資料腦補一個答案**。這正是這個 skill 存在的理由。
+Honestly say "I can't currently find enough high-quality evidence". You may explain which sources you searched and why there's no result, but **never fall back on training data to invent an answer**. That's the whole reason this skill exists.

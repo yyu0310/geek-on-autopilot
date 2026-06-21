@@ -1,6 +1,6 @@
-將個人 skill 整理開源，加入你的 geek-on-autopilot repo。
+Clean up a personal skill and open-source it into your geek-on-autopilot repo.
 
-⚙️ 使用前一次性設定：把下方三個佔位符替換成你的實際值，存檔後即可使用。
+⚙️ One-time setup before use: replace the three placeholders below with your actual values, save, and you're ready.
 
 ```
 REPO_LOCAL_PATH  = /your/local/path/to/geek-on-autopilot/
@@ -8,184 +8,186 @@ GITHUB_URL       = https://github.com/YOUR_USERNAME/geek-on-autopilot
 SKILL_DIR        = /your/local/path/to/your/skills/folder/
 ```
 
-用法：
-- `/open-source-skill [skill 名稱]` — 在 SKILL_DIR 尋找對應 .md
-- `/open-source-skill` — 從 IDE 當前開啟的 skill 檔開始
+Usage:
+- `/open-source-skill [skill name]` — find the matching .md in SKILL_DIR
+- `/open-source-skill` — start from the skill file currently open in the IDE
 
 ---
 
-## Step 0：開源適合性評估
+## Step 0: Open-source suitability check
 
-掃描前先確認這個 skill 值得開源：
+Before scanning, confirm the skill is worth open-sourcing:
 
-- 對其他用戶是否有獨立價值？（不依賴個人私有資料或特定工具）
-- 去掉個人資訊後，核心邏輯是否仍然完整可用？
+- Does it have standalone value to other users? (no dependency on personal private data or a specific tool)
+- After stripping personal info, is the core logic still complete and usable?
 
-⏸ 兩個都 Yes → 繼續 Step 1。
-有疑慮 → 停下來討論，保留在個人 Skill 即可，不必強行開源。
-
----
-
-## Step 1：讀取來源 skill
-
-1. 確認來源檔路徑：
-   - 有指定名稱 → `SKILL_DIR/[名稱].md`
-   - 沒有 → 從 IDE 當前開啟的檔案取得
-2. 讀取全文，顯示 skill 名稱與前 5 行摘要
+⏸ Both Yes → continue to Step 1.
+Any doubt → stop and discuss; it's fine to keep it as a personal skill, no need to force it open.
 
 ---
 
-## Step 2：資安掃描
+## Step 1: Read the source skill
 
-把以下 `<placeholder>` 換成你的實際值，再逐項執行：
+1. Confirm the source file path:
+   - Name given → `SKILL_DIR/[name].md`
+   - None → take the file currently open in the IDE.
+2. Read the whole thing; show the skill name and a 5-line summary.
+
+---
+
+## Step 2: Security scan
+
+Replace each `<placeholder>` below with your actual value, then run them one by one:
 
 ```bash
-# 個人絕對路徑
-grep -n "/Users/<your-username>" [檔案]
+# Personal absolute paths
+grep -n "/Users/<your-username>" [file]
 
-# 個人信箱
-grep -ni "gmail\.com\|<your-email-domain>" [檔案]
+# Personal email
+grep -ni "gmail\.com\|<your-email-domain>" [file]
 
-# GitHub 帳號識別符
-grep -n "<your-github-username>" [檔案]
+# GitHub account identifiers
+grep -n "<your-github-username>" [file]
 
-# 個人姓名（填入你的名字）
-grep -n "<your-name>" [檔案]
+# Personal name (fill in your name)
+grep -n "<your-name>" [file]
 
-# 外部本地檔依賴
-grep -n "讀取規則檔\|從以下路徑\|/Users/" [檔案]
+# External local-file dependencies
+grep -n "read the rules file\|from the following path\|/Users/" [file]
 ```
 
-掃描結果分類輸出：
+Classify the scan results:
 
-| 類型 | 行號 | 內容 | 建議處理 |
+| Type | Line | Content | Suggested handling |
 |---|---|---|---|
-| 個人路徑 | ... | ... | 改為通用描述 |
-| 外部依賴 | ... | ... | 內嵌規則進 skill 本體 |
-| 個人資訊 | ... | ... | 替換為通用版本 |
+| Personal path | ... | ... | Change to a generic description |
+| External dependency | ... | ... | Inline the rules into the skill body |
+| Personal info | ... | ... | Replace with a generic version |
 
-**若所有掃描結果均為「無」→ 跳過 Step 3，直接進 Step 4。**
+**If every scan result is "none" → skip Step 3, go straight to Step 4.**
 
-⏸ 有問題 → 列出後等用戶確認處理方式。
-
----
-
-## Step 3：清理（只改 repo 副本，自用版原檔絕不動）
-
-**黃金原則：自用版（你個人 skill 目錄裡的原檔）永遠保持原樣，一個字都不改。** 開源是「複製一份出去再清理副本」，不是「就地清理原檔」。原檔裡的真實路徑、機器特定設定、個人慣用範例，是你自用時的便利，不該為了開源被犧牲。自用版與開源版本來就該有差別。
-
-所以清理前**先把來源檔複製到 repo**（等同 Step 5-A，提前做）：
-```bash
-cp [來源路徑] REPO_LOCAL_PATH/[skill名稱].md
-```
-
-以下清理動作**全部只對這份 repo 副本執行**，來源檔不碰：
-
-**個人絕對路徑：**
-- `/Users/<your-username>/...` → 改為「IDE 當前開啟的檔案」或「你的專案路徑」
-
-**外部本地檔依賴（最常見：no-ai-trace 類型）：**
-- 讀取本地規則檔的步驟 → 把規則內容全部內嵌進 skill 本體
-- 確認內嵌後 skill 可獨立運作，不需要任何本地檔案
-
-**個人資訊：**
-- 個人信箱 → `your-email@example.com`
-- 個人姓名 → 刪除或改為通用稱呼
-
-清理完後顯示 diff，⏸ 等用戶確認「這樣 OK」再繼續。
+⏸ Any issues → list them and wait for the user to confirm how to handle them.
 
 ---
 
-## Step 4：確認 README 內容
+## Step 3: Clean up + translate (only the repo copies; never touch the personal original)
 
-⏸ 向用戶收集以下內容（可先給草稿讓用戶修改）：
+**Golden rule: the personal version (the original in your skills folder) stays exactly as is — not one character changed.** Open-sourcing is "copy it out, then clean the copy", not "clean the original in place". The real paths, machine-specific settings, and personal go-to examples in the original are conveniences for your own use, and shouldn't be sacrificed for open-sourcing. The personal version and the open-source version are meant to differ.
 
-1. **指令一覽表的一行描述**（中文，10 字以內）
-2. **詳細說明段落**（中文，3–5 行）：
-   - 這個指令解決什麼問題
-   - 用法範例
-   - 如有特殊需求（如：需要 Node.js）一併說明
-3. **llms.txt 的一行英文描述**（50 字以內）
+This repo's layout: **English is canonical in the repo root; the Chinese translation lives in `zh/`.** The root file is what installs as the `/command` and shows in `/help`, so it must be English. Run these in order:
 
-zh-TW 是 source of truth，英文和簡中從 zh-TW 轉換。
-
----
-
-## Step 5：寫入 repo
-
-確認後依序執行（全部完成再 commit，不逐步 commit）：
-
-**5-A：複製 skill 檔**（若 Step 3 已提前複製則略過，僅確認 repo 副本已就位且清理過、來源檔未被動過）
-```bash
-cp [來源路徑] REPO_LOCAL_PATH/[skill名稱].md
-```
-
-**5-B：更新三語 README**
-
-每個 README 需要改兩處：
-
-1. **指令一覽表**（在現有表格末端加一行）：
+1. **Copy the source into `zh/`** (the Chinese version):
+   ```bash
+   cp [source path] REPO_LOCAL_PATH/zh/[skill name].md
    ```
-   | `/[指令名]` | [功能描述] |
+2. **Clean the `zh/` copy** (the cleanup below runs on the repo copies only; the source is untouched):
+
+   **Personal absolute paths:**
+   - `/Users/<your-username>/...` → change to "the file currently open in the IDE" or "your project path"
+
+   **External local-file dependencies (most common: the no-ai-trace type):**
+   - Steps that read a local rules file → inline the whole rules content into the skill body
+   - Confirm that after inlining, the skill runs standalone with no local files needed
+
+   **Personal info:**
+   - Personal email → `your-email@example.com`
+   - Personal name → delete it or change to a generic label
+
+3. **Translate the cleaned Chinese into the root file** `REPO_LOCAL_PATH/[skill name].md`:
+   - Write native English following `/no-ai-trace` principles, not a literal machine translation. This repo is a portfolio piece; the English quality is the front door.
+   - For skills with YAML frontmatter, keep the frontmatter and translate its `description` to English.
+
+After cleanup, show the diff, ⏸ wait for the user to confirm "this is OK" before continuing.
+
+---
+
+## Step 4: Confirm README content
+
+⏸ Collect the following from the user (you can offer a draft for them to edit):
+
+1. **One-line description for the command table** (10 words or fewer)
+2. **Detail section** (3–5 lines):
+   - What problem this command solves
+   - Usage example
+   - Any special requirement (e.g. needs Node.js)
+3. **One-line English description for llms.txt** (50 words or fewer)
+
+zh-TW is the source of truth; English and Simplified Chinese are converted from zh-TW.
+
+---
+
+## Step 5: Write to the repo
+
+After confirmation, run in order (commit only after everything is done, not step by step):
+
+**5-A: Confirm both command files are in place** (done in Step 3): the English canonical at `REPO_LOCAL_PATH/[skill name].md` and the Chinese translation at `REPO_LOCAL_PATH/zh/[skill name].md`, both cleaned, with the source untouched.
+
+**5-B: Update the three-language READMEs**
+
+Each README needs two edits:
+
+1. **Command table** (add a row at the end of the existing table):
+   ```
+   | `/[command]` | [description] |
    ```
 
-2. **指令說明區塊**（在最後一個指令說明後加新區塊）：
+2. **Command detail section** (add a new block after the last command's detail):
    ````markdown
    ---
 
-   ### `/[指令名]`
+   ### `/[command]`
 
-   [詳細說明]
+   [detailed description]
 
    ```
-   /[指令名] [用法範例]
+   /[command] [usage example]
    ```
    ````
 
-語言切換列格式（三語都要有，目前語言純文字不加連結）：
+Language-switcher row format (all three languages; the current language is plain text with no link):
 ```
 [English](README.md) | [繁體中文](README.zh-TW.md) | [简体中文](README.zh-CN.md)
 ```
 
-**5-C：更新 llms.txt**
+**5-C: Update llms.txt**
 
-在 `## Commands` 區塊末端加一行：
+Add a line at the end of the `## Commands` section (link to the English root file):
 ```
-- [/[指令名]]([skill名稱].md): [英文一行描述]
+- [/[command]]([skill name].md): [one-line English description]
 ```
 
-**5-D：顯示所有變更的 diff**
+**5-D: Show the diff of all changes**
 
-⏸ 等用戶最終確認「可以推了」。
+⏸ Wait for the user's final "ready to push".
 
 ---
 
-## Step 6：Commit + Push
+## Step 6: Commit + Push
 
 ```bash
 cd REPO_LOCAL_PATH
 git add .
-git commit -m "feat: add /[skill名稱] command"
+git commit -m "feat: add /[skill name] command"
 git push
 ```
 
-若 repo 有版本管理（CHANGELOG.md、release tags），push 前先更新版號。
+If the repo has version management (CHANGELOG.md, release tags), bump the version before pushing.
 
-確認 push 成功後回報：GITHUB_URL
+After confirming the push succeeded, report: GITHUB_URL
 
-Push 成功後，更新 memory 裡的指令數：
+After a successful push, update the command count in memory:
 ```
 ~/.claude/projects/.../memory/reference_geek_on_autopilot.md
 ```
-把指令總數 +1（例如「7 個 slash commands」→「8 個」）。
+Add 1 to the total command count (e.g. "7 slash commands" → "8").
 
 ---
 
-## 附錄：不適合開源的 skill 特徵
+## Appendix: signs a skill shouldn't be open-sourced
 
-- Skill 核心邏輯依賴個人私有資料（個人財務、公司機密資料）
-- Skill 包含無法通用化的本地工具
-- 移除個人資訊後 skill 失去意義
-- Skill 只是個人 SOP 的自動化，對其他人沒有參考價值
+- The skill's core logic depends on personal private data (personal finance, company-confidential data)
+- The skill includes a local tool that can't be generalized
+- Removing personal info leaves the skill meaningless
+- The skill is just automation of a personal SOP with no reference value to others
 
-這類 skill 留在個人 Skill 目錄即可，不需要開源。
+Keep these in your personal skills folder; no need to open-source them.
