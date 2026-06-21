@@ -1,8 +1,8 @@
 # geek-on-autopilot
 
-> Five Claude Code slash commands for automating repetitive workflow steps.
+> Nine Claude Code slash commands for automating repetitive workflow steps.
 
-Five custom slash commands for Claude Code users who want to reduce friction in daily workflows. Each command is a standalone `.md` file — symlink to `~/.claude/commands/` to activate.
+Nine custom slash commands for Claude Code users who want to reduce friction in daily workflows. Each command is a standalone `.md` file — symlink to `~/.claude/commands/` to activate.
 
 ## Commands
 
@@ -14,6 +14,7 @@ Five custom slash commands for Claude Code users who want to reduce friction in 
 - [/open-source-skill](open-source-skill.md): Full SOP for open-sourcing a personal skill — security scan, cleanup, README update (3 languages), llms.txt, commit and push. Requires one-time path setup.
 - [/md-to-pdf](md-to-pdf.md): Converts Markdown to PDF via pandoc + LibreOffice, using a bundled PingFang TC reference template for clean CJK typography.
 - [/recover-from-log](recover-from-log.md): Recovers deleted or mangled file content from Claude Code session logs. Diagnoses which session and operation caused the damage, extracts the pre-change original from Read tool-results and Edit old_strings, and restores surgically while keeping good changes. Avoids the bare-grep trap where a skill name matches every session.
+- [/med-check](med-check.md): Answers medical and health questions from authoritative literature instead of training data. Retrieval-first workflow over Cochrane, clinical guidelines, PubMed (free E-utilities API), and WHO/CDC/FDA. Grades every claim by evidence level, cites PMIDs, says so when evidence is missing, screens red-flag symptoms. A literature-research aid, not medical diagnosis.
 
 ## Install
 

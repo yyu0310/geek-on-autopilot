@@ -2,7 +2,7 @@ English | [繁體中文](README.zh-TW.md) | [简体中文](README.zh-CN.md)
 
 # geek-on-autopilot
 
-Five custom slash commands that make Claude Code more useful.
+Nine custom slash commands that make Claude Code more useful.
 
 ## Problems solved
 
@@ -12,6 +12,7 @@ Five custom slash commands that make Claude Code more useful.
 - Sessions end without a clear record of what was decided or done
 - No standardized QA before exporting Marp presentations
 - Pandoc's default fonts break Chinese-English mixed PDFs
+- AI answers medical questions with confident hallucinations and no authoritative source
 
 ## Commands
 
@@ -25,6 +26,7 @@ Five custom slash commands that make Claude Code more useful.
 | `/open-source-skill` | Full SOP for cleaning and publishing a skill to your open-source repo |
 | `/md-to-pdf` | Converts Markdown to PDF with a bundled PingFang TC font template |
 | `/recover-from-log` | Recovers deleted or mangled file content from Claude Code session logs |
+| `/med-check` | Answers medical questions from authoritative literature, never training data |
 
 ## Install
 
@@ -150,6 +152,19 @@ It also handles a sharp trap. A skill's own name (like `simplify`) is injected i
 
 ```
 /recover-from-log [filename]
+```
+
+---
+
+### `/med-check`
+
+Answers medical and health questions from authoritative medical literature instead of training data, which hallucinates dangerously on health topics. It forces a retrieval-first workflow: Cochrane systematic reviews, clinical guidelines, PubMed primary research (via the free E-utilities API, no key needed), and authoritative health bodies (WHO, CDC, FDA, NIH). Every claim is graded by evidence level (proven / insufficient / conflicting), tagged with uncertainty, and cited with a PMID link. If the literature comes up empty, it says so instead of inventing an answer. It screens for red-flag emergency symptoms first and reminds you to see a doctor.
+
+This is a literature-research aid, not a medical diagnosis.
+
+```
+/med-check [your health question]
+/med-check                     # use the most recent health question in the conversation
 ```
 
 ## License
