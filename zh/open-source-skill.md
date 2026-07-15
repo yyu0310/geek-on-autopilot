@@ -166,10 +166,16 @@ zh-TW 是 source of truth，英文和簡中從 zh-TW 轉換。
 
 ```bash
 cd REPO_LOCAL_PATH
-git add .
+git add [skill名稱].md
 git commit -m "feat: add /[skill名稱] command"
+
+git add README.md README.zh-TW.md README.zh-CN.md llms.txt
+git commit -m "docs: document /[skill名稱] in README and llms.txt"
+
 git push
 ```
+
+拆成兩個 commit，讓 skill 本體和文件更新維持成兩個邏輯獨立的變更。GitHub 的 contribution 圖只認 commit 數不是 push 數，這樣拆也讓紀錄更精細。
 
 若 repo 有版本管理（CHANGELOG.md、release tags），push 前先更新版號。
 
