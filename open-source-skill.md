@@ -166,10 +166,16 @@ Add a line at the end of the `## Commands` section (link to the English root fil
 
 ```bash
 cd REPO_LOCAL_PATH
-git add .
+git add [skill name].md
 git commit -m "feat: add /[skill name] command"
+
+git add README.md README.zh-TW.md README.zh-CN.md llms.txt
+git commit -m "docs: document /[skill name] in README and llms.txt"
+
 git push
 ```
+
+Splitting into two commits keeps the skill addition and the docs update as separate, logically independent changes. GitHub's contribution graph counts commits rather than pushes, so this also gives a more granular history.
 
 If the repo has version management (CHANGELOG.md, release tags), bump the version before pushing.
 
