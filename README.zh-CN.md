@@ -2,13 +2,15 @@
 
 # geek-on-autopilot
 
-九个让 Claude Code 更顺手的自定义斜杠命令。
+十二个让 Claude Code 更顺手的自定义斜杠命令。
 
 ## 解决的问题
 
 - AI 训练数据有截止日期，时效性问题的答案不可靠
 - Claude 官方文档更新快，不知道去哪查
+- 其他 AI 厂商也每周更新，消息散在博客、文档与更新日志里
 - AI 写出来的文字有 AI 味，需要手动润色
+- 中文文案有 AI 味，英文规则扫不出来
 - Session 结束后不知道自己做了什么，没有留下记录
 - Marp 演示文稿导出前没有统一的 QA 流程
 - Pandoc 默认字体不支持中英混排，导出 PDF 字体很丑
@@ -20,9 +22,12 @@
 |---|---|
 | `/latest` | 强制联网搜索，禁止仅依赖训练数据回答时效性问题 |
 | `/claude-docs` | 直连路由至 Claude 官方文档，附来源 URL |
+| `/latest-ai` | 查 Claude 以外的 AI 厂商官方消息，或整理近一周更新 |
 | `/no-ai-trace` | 扫描 AI 写作痕迹，17 条规则逐条检查 |
+| `/no-ai-trace-lite` | 内部文档用，3 项 grep 加 4 项快扫 |
+| `/no-ai-trace-zh` | 中文文案专用的 AI 痕迹检查 |
 | `/session-review` | Session 收尾六模块盘点，45 行以内 |
-| `/marp-export` | Marp 演示文稿 QA 检查后导出 PDF |
+| `/marp-export` | Marp 演示文稿 QA、导出 PDF、验收输出 |
 | `/open-source-skill` | 安全扫描、清理、推入开源 repo 全流程 |
 | `/md-to-pdf` | MD 转 PDF，套用 PingFang TC 字体模板 |
 | `/recover-from-log` | 从 session log 救回被改坏或误删的文件内容 |
@@ -50,6 +55,8 @@ ln -sf "$(pwd)/latest.md" ~/.claude/commands/latest.md
 
 安装后在 Claude Code 输入 `/latest`、`/claude-docs` 等即可使用。
 
+`/md-to-pdf` 与 `/marp-export` 会调用 repo 根目录的 Python 脚本（`md2pdf.py`、`marp_export.py`），clone 下来的文件夹请留在原位，命令会从那里执行脚本。
+
 ## 命令说明
 
 ### `/latest`
@@ -73,16 +80,35 @@ ln -sf "$(pwd)/latest.md" ~/.claude/commands/latest.md
 
 ---
 
-### `/no-ai-trace`
+### `/latest-ai`
 
-扫描文案的 AI 写作痕迹。按 17 条规则逐条检查，列出违规原句和修改建议，最后给出语气总评。
+从各家 AI 公司的官方文档、新闻页与更新日志回答前沿 AI 问题，不靠训练数据。`/claude-docs` 管 Claude，`/latest-ai` 管其他所有厂商与跨家汇总。给问题就路由到相关公司的官方来源，不给问题就整理近一周的产品更新，先扫主要厂商。
+
+```
+/latest-ai OpenAI 这个月有调整 API 价格吗？
+/latest-ai                     # 近一周汇总
+```
+
+---
+
+### `/no-ai-trace`、`/no-ai-trace-lite`、`/no-ai-trace-zh`
+
+三个 AI 写作痕迹检查器，按手上的文字类型挑一个：
+
+| 命令 | 适用 | 检查方式 |
+|---|---|---|
+| `/no-ai-trace` | 对外英文文案：README、帖子、PR、邮件 | 17 条规则，列出违规原句与修改建议，最后给出语气总评 |
+| `/no-ai-trace-lite` | 内部工作文档：提案、日志、架构说明 | 3 项机械 grep 加 4 项语义快扫，每次改完都能快速跑 |
+| `/no-ai-trace-zh` | 中文文案 | Z1 到 Z11 中文专属规则，如元叙事标签、否定前提对比、翻译腔，另含基础检查 |
 
 ```
 /no-ai-trace                    # 检查对话中最近一次的文案输出
 /no-ai-trace [粘贴要检查的文字]
+/no-ai-trace-lite docs/proposal.md
+/no-ai-trace-zh [粘贴要检查的中文]
 ```
 
-17 条规则涵盖：术语堆砌、否定前提句、能力名词化、破折号滥用、自问自答、过渡词、碎句排比等常见 AI 写作痕迹。
+`/no-ai-trace` 的 17 条规则涵盖：术语堆砌、否定前提句、能力名词化、破折号与分号、自问自答、过渡词、碎句排比等常见 AI 写作痕迹。
 
 ---
 
@@ -103,13 +129,13 @@ Claude Code session 结束前的六模块盘点：
 
 ### `/marp-export`
 
-Marp 演示文稿提交前 QA + 导出 PDF：
+Marp 演示文稿提交前 QA 加导出 PDF，由 repo 根目录的 `marp_export.py` 执行：
 
-1. 扫描草稿标记（`【` 开头的备注），有的话等确认清除
-2. 确认 `assets/` 图片都存在
-3. 导出 PDF，报告路径和文件大小
+1. `qa` 扫描草稿标记（`TODO`、`FIXME`、`TBD`、`XXX` 与 `【` 括号），并确认本地图片都存在
+2. `export` 用 `npx` 与 `@marp-team/marp-cli` 生成 PDF
+3. `verify` 确认 PDF 存在、不是空文件，且比源文件新
 
-需要：Node.js（使用 `npx` 执行 `@marp-team/marp-cli`）
+需要：Node.js 与 Python 3
 
 ```
 /marp-export                   # 导出 IDE 当前打开的 .md 文件
@@ -133,11 +159,11 @@ Marp 演示文稿提交前 QA + 导出 PDF：
 
 ### `/md-to-pdf`
 
-将 Markdown 文件转为 PDF，字体使用 PingFang TC（苹方-繁）。PingFang TC 是中英混排 PDF 渲染 bug 最少的字体，Mac 生态免费内置，Windows / Linux 需另购。流程分两步：先用 pandoc 转 DOCX，再用 LibreOffice 转 PDF。转换前会先扫描格式陷阱（序号列表前是否有空行），避免 pandoc 解析出错。`reference_pingfang.docx` 字体模板已包含在 repo 中，clone 后设置一个路径即可使用。
+将 Markdown 文件转为 PDF，字体使用 PingFang TC（苹方-繁）。PingFang TC 是中英混排 PDF 渲染 bug 最少的字体，Mac 生态免费内置，Windows / Linux 需另购。repo 根目录的 `md2pdf.py` 执行整条流程：先 lint 扫描 pandoc 已知陷阱，再用 pandoc 搭配随附的 `reference_pingfang.docx` 模板转 DOCX，接着用 LibreOffice 转 PDF，最后用 `pdffonts` 检查，直到所有字体都是 PingFang TC 才放行。另有 `--strip` 输出不分页的长条版，以及 `wordcount` 字数上限检查。
 
-全程本地转换，不依赖任何第三方服务，文档内容不会传出去，适合有隐私顾虑的工作文档。
+全程本地转换，不依赖任何第三方服务，文档内容不会传出去，适合有隐私顾虑的工作文档。这个工具针对中文与中英混合文档，纯英文文件会过不了字体检查。
 
-需要：pandoc、LibreOffice（`brew install pandoc && brew install --cask libreoffice`）
+需要：Python 3、pandoc、LibreOffice、poppler（`brew install pandoc poppler && brew install --cask libreoffice`）
 
 ```
 /md-to-pdf                    # 转换 IDE 当前打开的 .md 文件
