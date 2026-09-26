@@ -31,4 +31,6 @@ Steps:
    - The source URL.
    - If it differs from what training data suggested, flag the difference ("I previously assumed X, but the latest docs show Y").
 
+4.5. **Counter-evidence check.** Run this only when the result will drive a real decision, such as placing a bet, switching model or tool, buying something, or deploying. Skip it for pure knowledge lookups so routine checks stay light. When it applies, once you have a conclusion, do one more round looking for holes: search for evidence that contradicts it, known counterexamples, and the real limits of that option. Confirm before the user acts on it. If you find counter-evidence, show both sides together, flag the conflict, and don't pick a winner on your own.
+
 5. When you can't find a definite answer, say so honestly ("I couldn't find clear information online"). Don't fall back on training data to fill the gap.
