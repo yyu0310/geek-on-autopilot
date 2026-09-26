@@ -1,18 +1,21 @@
 # geek-on-autopilot
 
-> Nine Claude Code slash commands for automating repetitive workflow steps.
+> Twelve Claude Code slash commands for automating repetitive workflow steps.
 
-Nine custom slash commands for Claude Code users who want to reduce friction in daily workflows. Each command is a standalone `.md` file — symlink to `~/.claude/commands/` to activate.
+Twelve custom slash commands for Claude Code users who want to reduce friction in daily workflows. Each command is a standalone `.md` file — symlink to `~/.claude/commands/` to activate.
 
 ## Commands
 
 - [/latest](latest.md): Forces web search before answering time-sensitive questions. Treats training data as a stale candidate, not a conclusion. Prioritizes official docs over generic search results.
 - [/claude-docs](claude-docs.md): Routes questions to the correct Claude official docs page. Routing table covers 20+ topics with direct URLs. Distinguishes between feature questions (docs) and availability questions (news + web search).
-- [/no-ai-trace](no-ai-trace.md): Scans text against 17 AI writing anti-patterns (buzzword stacking, negation openers, em dashes, rhetorical self-answers, etc.). Reports each violation with suggested rewrite, then gives an overall tone verdict.
+- [/latest-ai](latest-ai.md): Answers questions about AI vendors other than Claude from official docs, news pages, and changelogs. With no question, compiles a past-week product roundup.
+- [/no-ai-trace](no-ai-trace.md): Scans text against 17 AI writing anti-patterns (buzzword stacking, negation openers, em dashes and semicolons, rhetorical self-answers, etc.). Reports each violation with suggested rewrite, then gives an overall tone verdict.
+- [/no-ai-trace-lite](no-ai-trace-lite.md): Lightweight self-check for internal documents. 3 mechanical greps and 4 quick semantic scans.
+- [/no-ai-trace-zh](no-ai-trace-zh.md): Checks Chinese writing for AI tells with rules Z1 to Z11 (meta-narrative labels, negated-premise contrast, translationese) plus baseline checks.
 - [/session-review](session-review.md): Six-block session wrap-up: key takeaways, loose ends, planned items, memory suggestions, doc check, QA evidence. Output capped at 45 lines.
-- [/marp-export](marp-export.md): Pre-export QA for Marp presentations. Scans for draft markers and missing images, then generates PDF via npx marp-cli.
+- [/marp-export](marp-export.md): QA, export, and verification for Marp presentations via marp_export.py (qa, export, verify). Scans for draft markers and missing images, then generates a PDF with npx marp-cli.
 - [/open-source-skill](open-source-skill.md): Full SOP for open-sourcing a personal skill — security scan, cleanup, README update (3 languages), llms.txt, commit and push. Requires one-time path setup.
-- [/md-to-pdf](md-to-pdf.md): Converts Markdown to PDF via pandoc + LibreOffice, using a bundled PingFang TC reference template for clean CJK typography.
+- [/md-to-pdf](md-to-pdf.md): Converts Markdown to PDF via md2pdf.py (lint, pandoc, LibreOffice, pdffonts check), using a bundled PingFang TC reference template for clean CJK typography. Supports a one-page long version and word-count limits.
 - [/recover-from-log](recover-from-log.md): Recovers deleted or mangled file content from Claude Code session logs. Diagnoses which session and operation caused the damage, extracts the pre-change original from Read tool-results and Edit old_strings, and restores surgically while keeping good changes. Avoids the bare-grep trap where a skill name matches every session.
 - [/med-check](med-check.md): Answers medical and health questions from authoritative literature instead of training data. Retrieval-first workflow over Cochrane, clinical guidelines, PubMed (free E-utilities API), and WHO/CDC/FDA. Grades every claim by evidence level, cites PMIDs, says so when evidence is missing, screens red-flag symptoms. A literature-research aid, not medical diagnosis.
 

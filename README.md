@@ -2,13 +2,15 @@ English | [繁體中文](README.zh-TW.md) | [简体中文](README.zh-CN.md)
 
 # geek-on-autopilot
 
-Nine custom slash commands that make Claude Code more useful.
+Twelve custom slash commands that make Claude Code more useful.
 
 ## Problems solved
 
 - AI training data has a cutoff date, making time-sensitive answers unreliable
 - Claude's official docs update fast, and finding the right page takes time
+- Other AI vendors ship weekly too, and their news is scattered across blogs, docs, and changelogs
 - AI-generated text has a recognizable AI voice that needs polishing
+- Chinese writing has AI tells that English-first rules miss
 - Sessions end without a clear record of what was decided or done
 - No standardized QA before exporting Marp presentations
 - Pandoc's default fonts break Chinese-English mixed PDFs
@@ -20,9 +22,12 @@ Nine custom slash commands that make Claude Code more useful.
 |---|---|
 | `/latest` | Forces web search before answering any time-sensitive question |
 | `/claude-docs` | Routes directly to the right Claude docs page, with source URL |
+| `/latest-ai` | Answers questions about AI vendors other than Claude from official sources, or compiles a past-week roundup |
 | `/no-ai-trace` | Scans text against 17 AI writing anti-patterns |
+| `/no-ai-trace-lite` | Fast 3-grep, 4-scan check for internal documents |
+| `/no-ai-trace-zh` | Checks Chinese writing against Chinese-specific AI tells |
 | `/session-review` | Six-block session wrap-up in under 45 lines |
-| `/marp-export` | QA check and PDF export for Marp presentations |
+| `/marp-export` | QA check, PDF export, and output verification for Marp presentations |
 | `/open-source-skill` | Full SOP for cleaning and publishing a skill to your open-source repo |
 | `/md-to-pdf` | Converts Markdown to PDF with a bundled PingFang TC font template |
 | `/recover-from-log` | Recovers deleted or mangled file content from Claude Code session logs |
@@ -50,6 +55,8 @@ ln -sf "$(pwd)/latest.md" ~/.claude/commands/latest.md
 
 After installing, type `/latest`, `/claude-docs`, etc. in Claude Code to use them.
 
+`/md-to-pdf` and `/marp-export` call a Python script in the repo root (`md2pdf.py`, `marp_export.py`). Keep the clone in place, since the commands run those scripts from it.
+
 ## Commands in detail
 
 ### `/latest`
@@ -73,16 +80,35 @@ Routes to the right Claude official docs page based on your question, with sourc
 
 ---
 
-### `/no-ai-trace`
+### `/latest-ai`
 
-Scans text for AI writing patterns. Checks against 17 rules, lists each violation with the original sentence and a suggested rewrite, then gives an overall tone verdict.
+Answers frontier-AI questions from each vendor's official docs, news pages, and changelogs instead of training data. `/claude-docs` covers Claude. `/latest-ai` covers every other vendor and cross-vendor roundups. Given a question, it routes to the relevant company's official sources. With no question, it compiles the past week's product updates, scanning the major vendors first.
+
+```
+/latest-ai did OpenAI change its API pricing this month?
+/latest-ai                     # past-week roundup
+```
+
+---
+
+### `/no-ai-trace`, `/no-ai-trace-lite`, `/no-ai-trace-zh`
+
+Three checkers for AI writing patterns. Pick one by the kind of text you have:
+
+| Command | Use it for | How it checks |
+|---|---|---|
+| `/no-ai-trace` | Public-facing English copy: READMEs, posts, PRs, emails | 17 rules. Lists each violation with the original sentence and a suggested rewrite, then gives a tone verdict |
+| `/no-ai-trace-lite` | Internal working documents: proposals, logs, architecture notes | 3 mechanical greps and 4 quick semantic scans, so it runs fast after every edit |
+| `/no-ai-trace-zh` | Chinese copy | Rules Z1 to Z11 for tells specific to Chinese, like meta-narrative labels, negated-premise contrast, and translationese, plus baseline checks |
 
 ```
 /no-ai-trace                   # Check the most recent output in the conversation
 /no-ai-trace [paste your text]
+/no-ai-trace-lite docs/proposal.md
+/no-ai-trace-zh [貼上要檢查的中文]
 ```
 
-Rules cover: buzzword stacking, "not just A but B" negation openers, nominalization, em dashes, rhetorical questions with self-answers, filler transition words, parallel fragment stacking, and more.
+The 17 rules in `/no-ai-trace` cover buzzword stacking, "not just A but B" negation openers, nominalization, em dashes and semicolons, rhetorical questions with self-answers, filler transition words, parallel fragment stacking, and more.
 
 ---
 
@@ -103,13 +129,13 @@ All six blocks in under 45 lines. When several sessions work on the same thing, 
 
 ### `/marp-export`
 
-QA check and PDF export for Marp presentations:
+QA check and PDF export for Marp presentations, run by `marp_export.py` in the repo root:
 
-1. Scans for draft markers (`【` prefix), waits for confirmation before proceeding
-2. Verifies all `assets/` images exist
-3. Exports PDF, reports path and file size
+1. `qa` scans for draft markers (`TODO`, `FIXME`, `TBD`, `XXX`, and the `【` bracket) and checks that every local image exists
+2. `export` builds the PDF with `npx` and `@marp-team/marp-cli`
+3. `verify` confirms the PDF exists, isn't empty, and is newer than the source
 
-Requires: Node.js (uses `npx` to run `@marp-team/marp-cli`)
+Requires: Node.js and Python 3
 
 ```
 /marp-export                   # Export the currently open .md file
@@ -133,11 +159,11 @@ Requires one-time setup: fill in your repo's local path and GitHub URL at the to
 
 ### `/md-to-pdf`
 
-Converts Markdown to PDF using PingFang TC, the font with the fewest rendering bugs for Chinese-English mixed documents. It ships free with macOS — Windows and Linux users need to source it separately. Conversion runs in two steps: pandoc builds a DOCX using the bundled `reference_pingfang.docx` template, then LibreOffice converts it to PDF. Before converting, scans for common Pandoc format traps (numbered lists missing a leading blank line). The font template is included in the repo — set one path after cloning and the command works immediately.
+Converts Markdown to PDF using PingFang TC, the font with the fewest rendering bugs for Chinese-English mixed documents. It ships free with macOS, so Windows and Linux users need to source it separately. `md2pdf.py` in the repo root runs the pipeline: lint for known Pandoc traps, pandoc builds a DOCX from the bundled `reference_pingfang.docx` template, LibreOffice converts it to PDF, and a `pdffonts` check retries until every font is PingFang TC. Extras: `--strip` renders one tall page with no page breaks, and `wordcount` enforces a word limit.
 
-Runs entirely on your machine. No third-party services, no document data sent anywhere — suitable for confidential files.
+Runs entirely on your machine. No third-party services and no document data sent anywhere, so it suits confidential files. It targets Chinese and mixed Chinese and English documents, and English-only files fail the font check.
 
-Requires: pandoc, LibreOffice (`brew install pandoc && brew install --cask libreoffice`)
+Requires: Python 3, pandoc, LibreOffice, poppler (`brew install pandoc poppler && brew install --cask libreoffice`)
 
 ```
 /md-to-pdf                    # Convert the currently open .md file
