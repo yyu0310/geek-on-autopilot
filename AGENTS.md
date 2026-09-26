@@ -14,6 +14,8 @@ Each `.md` file in the root becomes a `/command-name` slash command when symlink
 
 **Language.** English is canonical in the repo root; each command's Traditional Chinese (zh-TW) translation lives in `zh/` with the same filename. The root English file is what installs as the `/command` and shows in `/help`, so it's the front door for international users; `zh/` serves zh-TW/zh-CN readers and anyone who wants to run a command in Chinese. When editing a command, update both the root file and its `zh/` counterpart. The `claude-docs.md` routing table targets English-language official docs because that's where Claude's documentation lives.
 
+**Scripts.** Two commands ship a Python script in the repo root: `md-to-pdf.md` calls `md2pdf.py`, and `marp-export.md` calls `marp_export.py`. The scripts use only the standard library, resolve `reference_pingfang.docx` relative to themselves, and include a `--selftest` that runs in a temporary folder. After editing a script, run its selftest and update the matching command file.
+
 ## What not to change
 
 - Do not add file path dependencies that point to a specific machine. If a command needs external data, embed it inline.
