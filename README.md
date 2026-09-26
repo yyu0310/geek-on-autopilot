@@ -21,7 +21,7 @@ Nine custom slash commands that make Claude Code more useful.
 | `/latest` | Forces web search before answering any time-sensitive question |
 | `/claude-docs` | Routes directly to the right Claude docs page, with source URL |
 | `/no-ai-trace` | Scans text against 17 AI writing anti-patterns |
-| `/session-review` | Four-block session wrap-up in under 35 lines |
+| `/session-review` | Six-block session wrap-up in under 45 lines |
 | `/marp-export` | QA check and PDF export for Marp presentations |
 | `/open-source-skill` | Full SOP for cleaning and publishing a skill to your open-source repo |
 | `/md-to-pdf` | Converts Markdown to PDF with a bundled PingFang TC font template |
@@ -88,14 +88,16 @@ Rules cover: buzzword stacking, "not just A but B" negation openers, nominalizat
 
 ### `/session-review`
 
-Four-block wrap-up before ending a Claude Code session:
+Six-block wrap-up before ending a Claude Code session:
 
-1. **Key takeaways** — decisions made, things learned, insights worth keeping (max 8 items)
-2. **Open items** — things mentioned but not finished (⬜ to-do / ❓ needs confirmation)
-3. **Memory suggestions** — what's worth saving to Claude's memory system
-4. **Doc check** — if code changed, whether related docs were updated
+1. **Key takeaways**: decisions made, things learned, insights worth keeping (max 8 items)
+2. **Loose ends**: only what truly fell out of every tracking system (⬜ to-do / ❓ needs confirmation)
+3. **Already-planned items**: unfinished but tracked elsewhere, so they don't count as loose ends
+4. **Memory suggestions**: what's worth saving to Claude's memory system
+5. **Doc check**: if code changed, whether related docs were updated
+6. **QA evidence**: for any code written, whether a real command was run and its output kept
 
-All four blocks in under 35 lines.
+All six blocks in under 45 lines. When several sessions work on the same thing, it distills all of them.
 
 ---
 
