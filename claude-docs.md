@@ -14,7 +14,7 @@ Steps:
 
    | Question type | Check first |
    |---|---|
-   | **Availability / is it still usable / disabled / access eligibility / regional limits / a model missing from my account** | **WebSearch first + check https://www.anthropic.com/news; don't rely on the docs spec pages alone** |
+   | **Availability / is it still usable / disabled / access eligibility / regional limits / export controls / a model missing from my account** | **WebSearch first + check https://www.anthropic.com/news; don't rely on the docs spec pages alone** |
    | Model names / versions / capability comparison | https://platform.claude.com/docs/en/docs/about-claude/models/overview |
    | Latest releases / new features / release notes | https://platform.claude.com/docs/en/release-notes/overview |
    | API parameters / request format / stop_reason | https://platform.claude.com/docs/en/api/messages |
@@ -41,7 +41,7 @@ Steps:
 
    ⚠️ Tell a "feature question" apart from an "availability question":
    - **Feature question** (how to use this parameter, how large is this model's context) → check the docs spec page.
-   - **Availability question** (is it still usable, why is it disabled, is it available in my region) → **the docs spec pages go stale and don't post deprecation notices; check news + WebSearch instead**.
+   - **Availability question** (is it still usable, why is it disabled, is it available in my region) → **the docs spec pages go stale and don't post deprecation notices; check news + WebSearch instead**. The docs' models/overview page may still say "generally available" for a model that a government order, export control, or service outage has already taken offline.
    - **If the user provides a screenshot / client view** (e.g. a menu showing a model as disabled) → **trust the actual client state**; don't use the docs spec page to argue against what the user sees in front of them.
 
 3. Use WebFetch to read the matching page directly (when a question maps to several pages, read the most relevant one first).
@@ -55,4 +55,4 @@ Steps:
 
 6. If the docs have been updated (e.g. a new model ID or a renamed parameter) and differ from training data, go with the docs and flag the difference.
 
-7. Truth hierarchy (priority when sources conflict): **the actual client view / live news announcements > docs spec pages > training data**. The docs are a spec reference, not the source of truth for live availability.
+7. Truth hierarchy (priority when sources conflict): **the actual client view / live news announcements > docs spec pages > training data**. The docs are a spec reference, not the source of truth for live availability. After answering an availability question, cross-check it and don't settle on a single docs page.
