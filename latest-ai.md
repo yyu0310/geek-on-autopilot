@@ -21,26 +21,26 @@ Core principles (same as `/latest`):
 
 | Company / product | Official blog / news | Official docs | Official X | Notes |
 |---|---|---|---|---|
-| **xAI / Grok** | https://x.ai/news | https://docs.x.ai | @xai @grok | Grok product news often lands on X first |
-| **OpenAI / ChatGPT / Codex** | https://openai.com/news/ | https://platform.openai.com/docs | @OpenAI @OpenAIDevs | ChatGPT release notes: search "release notes" on help.openai.com. Codex: openai.com/codex |
-| **Google / Gemini** | https://blog.google/technology/ai/ and https://deepmind.google/discover/blog/ | https://ai.google.dev | @GoogleDeepMind @GoogleAIStudio | Docs cover the Gemini API. The agentic IDE Antigravity lives at https://antigravity.google |
-| **DeepSeek** | https://api-docs.deepseek.com/news | https://api-docs.deepseek.com | @deepseek_ai | Model releases mostly appear on GitHub and X |
-| **Apple** | https://www.apple.com/newsroom/ and https://machinelearning.apple.com | none | @Apple | Apple Intelligence and Siri news mostly comes through the Newsroom and WWDC |
-| **Qwen / Alibaba** | https://qwenlm.github.io/blog/ | https://help.aliyun.com | @Alibaba_Qwen | Docs cover the Bailian / DashScope API. Chat entry point: chat.qwen.ai |
-| **Zhipu Z.ai / GLM** | https://z.ai/blog | https://docs.z.ai | @Zai_org | Open weights on Hugging Face under `zai-org` |
-| **Meta AI** | https://ai.meta.com/blog/ and https://llama.com | none | @AIatMeta | Covers Meta's model families and open-weight releases |
-| **Cross-vendor comparison sites** | Artificial Analysis https://artificialanalysis.ai, Hugging Face Open LLM Leaderboard, Epoch AI https://epoch.ai | none | @ArtificialAnlys | Use these for cross-vendor capability and price-performance comparisons |
+| **xAI / Grok** | https://x.ai/news | https://docs.x.ai | xai, grok | Grok product news often lands on X first |
+| **OpenAI / ChatGPT / Codex** | https://openai.com/news/ | https://platform.openai.com/docs | OpenAI, OpenAIDevs | ChatGPT release notes: search "release notes" on help.openai.com. Codex: openai.com/codex |
+| **Google / Gemini** | https://blog.google/technology/ai/ and https://deepmind.google/discover/blog/ | https://ai.google.dev | GoogleDeepMind, GoogleAIStudio | Docs cover the Gemini API. The agentic IDE Antigravity lives at https://antigravity.google |
+| **DeepSeek** | https://api-docs.deepseek.com/news | https://api-docs.deepseek.com | deepseek_ai | Model releases mostly appear on GitHub and X |
+| **Apple** | https://www.apple.com/newsroom/ and https://machinelearning.apple.com | none | Apple | Apple Intelligence and Siri news mostly comes through the Newsroom and WWDC |
+| **Qwen / Alibaba** | https://qwenlm.github.io/blog/ | https://help.aliyun.com | Alibaba_Qwen | Docs cover the Bailian / DashScope API. Chat entry point: chat.qwen.ai |
+| **Zhipu Z.ai / GLM** | https://z.ai/blog | https://docs.z.ai | Zai_org | Open weights on Hugging Face under `zai-org` |
+| **Meta AI** | https://ai.meta.com/blog/ and https://llama.com | none | AIatMeta | Covers Meta's model families and open-weight releases |
+| **Cross-vendor comparison sites** | Artificial Analysis https://artificialanalysis.ai, Hugging Face Open LLM Leaderboard, Epoch AI https://epoch.ai | none | ArtificialAnlys | Use these for cross-vendor capability and price-performance comparisons |
 
 ### Tier 2: check when clearly relevant, or when the weekly roundup has news
 
 | Company / product | Official blog / news | Official X |
 |---|---|---|
-| **MiniMax** | https://www.minimax.io/news, docs at minimax.io/platform | @MiniMax__AI |
-| **Moonshot / Kimi** | https://moonshot.ai and https://kimi.ai, docs at platform.kimi.ai/docs | @Kimi_Moonshot |
-| **NVIDIA Nemotron** | https://research.nvidia.com/labs/nemotron/ and https://nvidianews.nvidia.com | @nvidia |
-| **Manus** | https://manus.im/blog | @ManusAI_HQ |
-| **Cursor** | https://cursor.com/changelog and https://cursor.com/blog | @cursor_ai |
-| **Perplexity** | https://www.perplexity.ai/hub/blog | @perplexity_ai |
+| **MiniMax** | https://www.minimax.io/news, docs at minimax.io/platform | MiniMax__AI |
+| **Moonshot / Kimi** | https://moonshot.ai and https://kimi.ai, docs at platform.kimi.ai/docs | Kimi_Moonshot |
+| **NVIDIA Nemotron** | https://research.nvidia.com/labs/nemotron/ and https://nvidianews.nvidia.com | nvidia |
+| **Manus** | https://manus.im/blog | ManusAI_HQ |
+| **Cursor** | https://cursor.com/changelog and https://cursor.com/blog | cursor_ai |
+| **Perplexity** | https://www.perplexity.ai/hub/blog | perplexity_ai |
 
 ## Steps
 
