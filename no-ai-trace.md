@@ -1,8 +1,8 @@
-A general-purpose self-check for removing AI writing traces. Works on both English and Chinese output.
+A general-purpose self-check for removing AI writing traces. Written for English copy. For Chinese copy, use `/no-ai-trace-zh`.
 
 Usage:
-- `/no-ai-trace` — check the most recent piece of writing in the conversation
-- `/no-ai-trace [paste text]` — check the given text
+- `/no-ai-trace`: check the most recent piece of writing in the conversation
+- `/no-ai-trace [paste text]`: check the given text
 
 Steps:
 
@@ -10,16 +10,22 @@ Steps:
    - Text pasted after the command → check that.
    - None → check the most recent writing output in the conversation.
 
-2. Scan against the Part 1 red-flag list (Rules 1–17), rule by rule. Catch the mechanically detectable ones directly; judge the semantic ones sentence by sentence.
+2. Scan against the Part 1 red-flag list (Rules 1–17), rule by rule. Catch the mechanically detectable ones directly and judge the semantic ones sentence by sentence.
 
 3. Run the final "self-check before output" list below.
 
 4. Output format (fixed):
    - First line: "Found N issues" (say it even if 0)
    - Per issue: `[Rule X name] original sentence` → suggested rewrite (per Part 2 below)
-   - Last line: an overall tone verdict, one sentence — does it read like a human or a robot?
+   - Last line: an overall tone verdict in one sentence: does it read like a human or a robot?
 
 5. At 0 issues: the tone verdict must also pass before you output "✓ passed".
+
+6. Keep the rules calibrated: when the user says a sentence "sounds like AI", or pastes a final version they hand-edited, record the original sentence and the final version, with the matching rule number, in wherever the user keeps their own rules. Real corrections teach the rewrite direction better than a bare "this is wrong".
+
+---
+
+**Core principle: experts show their value in clear language, not in complicated sentences.**
 
 ---
 
@@ -37,6 +43,7 @@ Banned words: `leverage`, `utilize`, `synergy`, `robust framework`, `holistic ap
 Banned adverb/adjective stacking: `highly`, `incredibly`, `deeply`, `seamlessly`, `cutting-edge`, `transformative`, `world-class`, `state-of-the-art`
 
 - (X) `This is a highly effective and incredibly powerful solution that seamlessly integrates with your workflow.`
+- (X) `Our deeply committed and highly skilled team delivers cutting-edge, transformative results.`
 
 ### 2. Negated-premise contrast
 
@@ -44,6 +51,7 @@ Banned pattern: `...is not just [A]; it is also [B]...` and every variant of "ne
 
 - (X) `This solution is not just efficient; it is also scalable.`
 - (X) `They see the hardware, not the doctrine.`
+- (X) `It's not a direct threat. An invasion is a quagmire.`
 - (X) `He's not preparing for an invasion; he's manufacturing consent for other pressure.`
 - (X) 這不是一個工具，而是一個生態系統。
 - (X) 我們不是在追求速度，而是在追求品質。
@@ -53,6 +61,7 @@ Banned pattern: `...is not just [A]; it is also [B]...` and every variant of "ne
 - (X) `This software has the ability to detect errors.`
 - (X) `This framework provides the capability of scaling.`
 - (X) `The team's responsibility is the management of risk.`
+- (X) `The function of this tool is the detection of errors.`
 - (X) `The team made a decision to proceed.`
 
 ### 4. No contractions (English) / translationese (Chinese)
@@ -81,12 +90,14 @@ Banned pattern: `...is not just [A]; it is also [B]...` and every variant of "ne
 - (X) `The project is currently in the implementation phase.`
 - (X) `We are in the process of evaluating potential solutions.`
 
-### 9. Em dash
+### 9. Em dash and semicolon
 
-Never use `—` under any circumstances; use a comma or restructure the sentence.
+Never use `—` under any circumstances. In English prose, don't use `;` to chain clauses either, because it reads as AI. Use a comma or a period, or restructure the sentence. In a plain list, use a middle dot `·` as the separator.
 
 - (X) `The results were clear — we needed a new approach.`
 - (X) `The product is built for traders — not institutions.`
+- (X) `Issuer of the invoices; payments infrastructure.`
+- (X) `The audit finished on Friday; the fixes shipped on Monday.`
 
 ### 10. "The X is real" confirmation
 
@@ -102,6 +113,9 @@ A parenthetical weakens the main clause. Restructure into a standalone sentence,
 
 - (X) `The platform provides liquidity solutions (especially for institutional players) across major chains.`
 - (X) `The token (which launched in Q1) has seen strong volume growth.`
+- (X) `Opening (Jane Rivera, Founder of Northwind): Welcome...` (an agenda or table row that wraps "name + title + organization" in parentheses)
+
+Functional parentheses such as `(45 min)` or `(name TBC)` are fine.
 
 ### 12. Rhetorical question and self-answer
 
@@ -112,7 +126,7 @@ AI loves a question to build suspense, then answers it itself. Cut the question,
 
 ### 13. Transition-word overuse
 
-`Furthermore`, `Moreover`, `Additionally`, `In conclusion`, `To summarize` are AI's favorite paragraph glue; using them reads like a report template.
+`Furthermore`, `Moreover`, `Additionally`, `In conclusion`, `To summarize` are AI's favorite paragraph glue. Using them reads like a report template.
 
 - (X) `Furthermore, the platform supports multiple chains. Moreover, fees are competitive.`
 - (X) `In conclusion, this represents a significant step forward.`
@@ -155,9 +169,10 @@ Same action, different subjects, each as its own sentence. Mechanically cutting 
 
 ### 1. Jargon stacking → the simplest, most direct word
 
-`use` and `leverage` / `utilize` mean the same thing; always pick `use`.
+`use` and `leverage` / `utilize` mean the same thing. Always pick `use`.
 
 - (O) `We should use our team's strengths to work better together.`
+- (O) `Our team delivers results.`
 - (O) `This report examines the key findings.`
 
 ### 2. Negated-premise contrast → state the positive fact directly
@@ -173,6 +188,7 @@ Cut the first half, just say B.
 - (O) `This software detects errors.`
 - (O) `This framework scales.`
 - (O) `The team manages risk.`
+- (O) `This tool detects errors.`
 - (O) `The team decided to proceed.`
 
 ### 4. No contractions → contractions + colloquial
@@ -197,9 +213,12 @@ Cut the first half, just say B.
 - (O) `We're reviewing three vendors this week.`
 - (O) `The project is 50% complete.`
 
-### 9. Em dash → comma or restructure
+### 9. Em dash and semicolon → comma, period, or restructure
 
 - (O) `The results were clear, and we needed a new approach.`
+- (O) `Issuer of the invoices. Payments infrastructure.`
+- (O) `Issuer of the invoices · payments infrastructure` (a plain list, so a middle dot works)
+- (O) `The audit finished on Friday. The fixes shipped on Monday.`
 
 ### 10. "The X is real" → concrete statement
 
@@ -209,6 +228,7 @@ Cut the first half, just say B.
 ### 11. Parenthetical asides → fold into the main clause or cut
 
 - (O) `The platform provides liquidity solutions across major chains, with particular depth for institutional players.`
+- (O) `Opening by Jane Rivera, Founder of Northwind: Welcome...`
 
 ### 12. Rhetorical question and self-answer → state the conclusion
 
@@ -249,9 +269,9 @@ Cut the first half, just say B.
 - Container sentences: any structure like `contains an analysis of` / `provides an indication of`?
 - Roundabout: any winding verbs like `serve to illuminate` / `aims to facilitate`?
 - Abstract phase: any vague description like "in the implementation phase"? Change to a real action or number.
-- Em dash: any `—`? Replace all with commas or restructure.
+- Em dash and semicolon: any `—`, or a `;` chaining clauses in English prose? Replace with a comma or a period, or restructure. Use `·` for a pure list separator.
 - Confirmation: any "the X is real"? Replace with a concrete number or fact.
-- Parentheses: any parenthetical asides? Restructure or cut.
+- Parentheses: any parenthetical asides? Restructure or cut. A name + title + organization wrapped in parentheses becomes `by X, Title of Org:`. Functional ones like `(45 min)` stay.
 - Rhetorical: any question followed by self-answer? Cut the question, state the conclusion.
 - Transitions: any `Furthermore` / `Moreover` / `In conclusion`? Restructure.
 - Hedge: any "It's worth noting" / "It should be mentioned"? Cut it.
