@@ -21,26 +21,26 @@ description: 從各家 AI 公司的官方文件、官方消息與 changelog 抓�
 
 | 公司 / 產品 | 官方 blog / news | 官方文件 | 官方 X | 備註 |
 |---|---|---|---|---|
-| **xAI / Grok** | https://x.ai/news | https://docs.x.ai | @xai @grok | Grok 產品消息常先在 X 平台公布 |
-| **OpenAI / ChatGPT / Codex** | https://openai.com/news/ | https://platform.openai.com/docs | @OpenAI @OpenAIDevs | ChatGPT release notes：在 help.openai.com 搜「release notes」。Codex：openai.com/codex |
-| **Google / Gemini** | https://blog.google/technology/ai/ 與 https://deepmind.google/discover/blog/ | https://ai.google.dev | @GoogleDeepMind @GoogleAIStudio | 文件為 Gemini API。agentic IDE Antigravity 在 https://antigravity.google |
-| **DeepSeek** | https://api-docs.deepseek.com/news | https://api-docs.deepseek.com | @deepseek_ai | 模型發布多在 GitHub 與 X |
-| **Apple** | https://www.apple.com/newsroom/ 與 https://machinelearning.apple.com | 無 | @Apple | Apple Intelligence 與 Siri 動態多經由 Newsroom 與 WWDC 發布 |
-| **Qwen / 千問 / 阿里巴巴** | https://qwenlm.github.io/blog/ | https://help.aliyun.com | @Alibaba_Qwen | 文件為百煉 / DashScope API。聊天入口：chat.qwen.ai |
-| **智譜 Z.ai / GLM** | https://z.ai/blog | https://docs.z.ai | @Zai_org | 開源權重在 Hugging Face 的 `zai-org` |
-| **Meta AI** | https://ai.meta.com/blog/ 與 https://llama.com | 無 | @AIatMeta | 涵蓋 Meta 的模型系列與開源權重發布 |
-| **跨家比較平台** | Artificial Analysis https://artificialanalysis.ai、Hugging Face Open LLM Leaderboard、Epoch AI https://epoch.ai | 無 | @ArtificialAnlys | 用來做跨家能力與性價比對照 |
+| **xAI / Grok** | https://x.ai/news | https://docs.x.ai | xai, grok | Grok 產品消息常先在 X 平台公布 |
+| **OpenAI / ChatGPT / Codex** | https://openai.com/news/ | https://platform.openai.com/docs | OpenAI, OpenAIDevs | ChatGPT release notes：在 help.openai.com 搜「release notes」。Codex：openai.com/codex |
+| **Google / Gemini** | https://blog.google/technology/ai/ 與 https://deepmind.google/discover/blog/ | https://ai.google.dev | GoogleDeepMind, GoogleAIStudio | 文件為 Gemini API。agentic IDE Antigravity 在 https://antigravity.google |
+| **DeepSeek** | https://api-docs.deepseek.com/news | https://api-docs.deepseek.com | deepseek_ai | 模型發布多在 GitHub 與 X |
+| **Apple** | https://www.apple.com/newsroom/ 與 https://machinelearning.apple.com | 無 | Apple | Apple Intelligence 與 Siri 動態多經由 Newsroom 與 WWDC 發布 |
+| **Qwen / 千問 / 阿里巴巴** | https://qwenlm.github.io/blog/ | https://help.aliyun.com | Alibaba_Qwen | 文件為百煉 / DashScope API。聊天入口：chat.qwen.ai |
+| **智譜 Z.ai / GLM** | https://z.ai/blog | https://docs.z.ai | Zai_org | 開源權重在 Hugging Face 的 `zai-org` |
+| **Meta AI** | https://ai.meta.com/blog/ 與 https://llama.com | 無 | AIatMeta | 涵蓋 Meta 的模型系列與開源權重發布 |
+| **跨家比較平台** | Artificial Analysis https://artificialanalysis.ai、Hugging Face Open LLM Leaderboard、Epoch AI https://epoch.ai | 無 | ArtificialAnlys | 用來做跨家能力與性價比對照 |
 
 ### Tier 2：有明確相關才查，週報有料才收
 
 | 公司 / 產品 | 官方 blog / news | 官方 X |
 |---|---|---|
-| **MiniMax** | https://www.minimax.io/news，文件在 minimax.io/platform | @MiniMax__AI |
-| **Moonshot / Kimi** | https://moonshot.ai 與 https://kimi.ai，文件在 platform.kimi.ai/docs | @Kimi_Moonshot |
-| **NVIDIA Nemotron** | https://research.nvidia.com/labs/nemotron/ 與 https://nvidianews.nvidia.com | @nvidia |
-| **Manus** | https://manus.im/blog | @ManusAI_HQ |
-| **Cursor** | https://cursor.com/changelog 與 https://cursor.com/blog | @cursor_ai |
-| **Perplexity** | https://www.perplexity.ai/hub/blog | @perplexity_ai |
+| **MiniMax** | https://www.minimax.io/news，文件在 minimax.io/platform | MiniMax__AI |
+| **Moonshot / Kimi** | https://moonshot.ai 與 https://kimi.ai，文件在 platform.kimi.ai/docs | Kimi_Moonshot |
+| **NVIDIA Nemotron** | https://research.nvidia.com/labs/nemotron/ 與 https://nvidianews.nvidia.com | nvidia |
+| **Manus** | https://manus.im/blog | ManusAI_HQ |
+| **Cursor** | https://cursor.com/changelog 與 https://cursor.com/blog | cursor_ai |
+| **Perplexity** | https://www.perplexity.ai/hub/blog | perplexity_ai |
 
 ## 步驟
 
