@@ -14,7 +14,7 @@
 
    | 問題類型 | 優先查詢 |
    |---|---|
-   | **可用性 / 還能不能用 / 被停用 / 存取資格 / 地區限制 / 帳號看不到某模型** | **先 WebSearch + 查 https://www.anthropic.com/news，不要只看 docs 規格頁** |
+   | **可用性 / 還能不能用 / 被停用 / disabled / 存取資格 / 地區限制 / 出口管制 / 帳號看不到某模型** | **先 WebSearch + 查 https://www.anthropic.com/news，不要只看 docs 規格頁** |
    | 模型名稱 / 版本 / 能力比較 | https://platform.claude.com/docs/en/docs/about-claude/models/overview |
    | 最新發布 / 新功能 / Release Notes | https://platform.claude.com/docs/en/release-notes/overview |
    | API 參數 / 請求格式 / stop_reason | https://platform.claude.com/docs/en/api/messages |
@@ -41,7 +41,7 @@
 
    ⚠️ 區分「功能問題」與「可用性問題」：
    - **功能問題**（這個參數怎麼用、這個模型多大 context）→ 查 docs 規格頁。
-   - **可用性問題**（還能用嗎、為什麼被 disabled、我這個地區能不能用）→ **docs 規格頁會過時且不寫停用公告，必須改查 news + WebSearch**。
+   - **可用性問題**（還能用嗎、為什麼被 disabled、我這個地區能不能用）→ **docs 規格頁會過時且不寫停用公告，必須改查 news + WebSearch**。docs 的 models/overview 可能還寫著「generally available」，但實際已被政府命令、出口管制或服務中斷停用。
    - **用戶若提供截圖/客戶端畫面**（例如選單顯示某模型 disabled）→ **以客戶端實際狀態為準**，不要用 docs 規格頁反駁用戶眼前看到的事實。
 
 3. 用 WebFetch 直接讀取對應頁面（問題對應多個頁面時，優先讀最相關的一個）
@@ -55,4 +55,4 @@
 
 6. 如果文件有更新（例如新模型 ID、新參數名稱），和訓練資料不一樣時，以文件為準並主動說明差異
 
-7. 真相層級（衝突時的優先序）：**客戶端實際畫面 / news 即時公告 > docs 規格頁 > 訓練資料**。docs 是規格參考，不是即時可用性的真相來源。
+7. 真相層級（衝突時的優先序）：**客戶端實際畫面 / news 即時公告 > docs 規格頁 > 訓練資料**。docs 是規格參考，不是即時可用性的真相來源；可用性問題答完務必交叉查證，不要單靠一頁 docs 就下定論。
