@@ -45,11 +45,11 @@ PDF 會產生在來源檔旁邊。加 `--strip` 可輸出整份不分頁的長�
 
 1. **LibreOffice 在 macOS 的中文字體解析有隨機性。** 同一份 docx 每轉一次可能出現不同字體，跟模板指定哪個字體名稱無關。腳本會平行轉多份，逐份用 `pdffonts` 檢查，留下第一份所有字體都是 PingFang TC 的，最多重試 20 輪。平均約 15 秒，最壞約 45 秒。不要改成手動轉換。若自己手動轉，轉完用 `pdffonts file.pdf` 驗證，字體不對就重轉。
 
-2. **單一 Enter 就是換行。** 腳本使用 `pandoc -f markdown+hard_line_breaks`，並先在暫存副本剝除行尾反斜線，舊檔才不會出現雙倍換行。原始檔不會被改動。
+2. **單一 Enter 就是換行。** 腳本使用 `pandoc -f markdown+hard_line_breaks` 加上第 4 點的旗標，並先在暫存副本剝除行尾反斜線，舊檔才不會出現雙倍換行。原始檔不會被改動。
 
 3. **圖說不要用單獨成段的 `![圖說](路徑)`。** pandoc 會把它轉成 Figure，圖說走 Image Caption 樣式，而這個樣式沒有指定中文字體，字體 QA 每次都過不了。正確寫法：圖說寫成一般文字行，緊接下一行放 `![](路徑){width=85%}`，兩行之間不留空行。圖片路徑以目前工作目錄為基準，先 `cd` 到 .md 所在資料夾再轉。
 
-4. **成對的 `$` 會被當成 LaTeX 數學公式。** 像 `$AAPL 和 $MSFT` 這類文字會變成斜體襯線字加後備字體，字體 QA 每一輪都失敗。在暫存副本把每個 `$` 跳脫成 `\$`，例如 `sed -i '' 's/\$/\\$/g'`。PDF 顯示不變，原檔也不會被動到。要確認是不是這個原因，執行 `unzip -p file.docx word/document.xml | grep -o '<m:oMath>' | wc -l`，大於 0 就是中了。
+4. **成對的 `$` 不會再被當成 LaTeX 數學公式。** 腳本呼叫 pandoc 時帶了 `-tex_math_dollars`，所以像 `$AAPL 和 $MSFT` 或 `NT$18 元 … NT$6 元` 這類文字會維持純文字。本工具不支援 LaTeX 數學式。沒有這個旗標時，兩個 `$` 之間的內容會變成斜體襯線字加後備字體，字體 QA 每一輪都失敗。手動執行 pandoc 時要自己加 `-f markdown+hard_line_breaks-tex_math_dollars`。要檢查 .docx 有沒有殘留數學式，執行 `unzip -p file.docx word/document.xml | grep -o '<m:oMath>' | wc -l`，大於 0 就是中了。
 
 5. **exit 5 常常只是 PATH 問題。** Claude Code 的 shell 常不含 `/opt/homebrew/bin`，裝了的工具看起來像缺件。先執行 `export PATH="/opt/homebrew/bin:$PATH"` 再重跑。用 `ls /opt/homebrew/bin` 確認清單裡真的沒有，才算缺件。
 
