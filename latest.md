@@ -1,8 +1,8 @@
 Answer questions from live information on the web. Never rely on training data alone. Use this for anything time-sensitive: frontier AI, tool feature changes, version support, pricing.
 
 Usage:
-- `/latest [question]` — search the given question
-- `/latest` — with no question, the target is the most recent time-sensitive question in the conversation
+- `/latest [question]`: search the given question
+- `/latest`: with no question, the target is the most recent time-sensitive question in the conversation
 
 Core principles:
 - Training data has a cutoff. AI tools, models, and APIs change almost weekly, so **treat any answer from training data as a stale candidate, not the conclusion.**
@@ -18,6 +18,8 @@ Steps:
    - Try fetching `[docs site]/llms.txt`. Many modern docs sites publish this index; grep a keyword to jump straight to the right page.
    - Use WebFetch to read the matching docs page; look for the changelog / release notes / what's new section.
    - For tools on GitHub, WebFetch the repo's README / CHANGELOG / Releases page.
+   - To find out whether a dataset covers X, don't trust the description. `git clone --depth 1` it into a scratch folder and grep. GitHub code search skips large files and gets rate-limited quickly, so zero hits doesn't mean it isn't there.
+   - To find a tool on GitHub, start `gh search repos` with one or two broad terms (such as `weather data`) and filter the results yourself. Multi-word exact queries often return nothing.
 
 3. When there's no clear target doc, or the docs aren't current enough, fill in with WebSearch. Keyword strategy:
    - Add the current year or "latest" to filter out old articles.
