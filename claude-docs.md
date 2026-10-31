@@ -3,8 +3,8 @@ Look up the official Claude docs to answer questions about Claude's features, AP
 Official docs domain: https://platform.claude.com/docs/en/
 
 Usage:
-- `/claude-docs [question]` — look up the given question
-- `/claude-docs` — with no question, infer what to look up from the conversation context
+- `/claude-docs [question]`: look up the given question
+- `/claude-docs`: with no question, infer what to look up from the conversation context
 
 Steps:
 
@@ -14,8 +14,8 @@ Steps:
 
    | Question type | Check first |
    |---|---|
-   | **Availability / is it still usable / disabled / access eligibility / regional limits / export controls / a model missing from my account** | **WebSearch first + check https://www.anthropic.com/news; don't rely on the docs spec pages alone** |
-   | Model names / versions / capability comparison | https://platform.claude.com/docs/en/docs/about-claude/models/overview |
+   | **Availability / is it still usable / disabled / access eligibility / regional limits / export controls / a model missing from my account** | **WebSearch first + check https://www.anthropic.com/news (announcements); don't rely on the docs spec pages alone** |
+   | Model names / versions / capability comparison / Fable / Mythos | https://platform.claude.com/docs/en/docs/about-claude/models/overview |
    | Latest releases / new features / release notes | https://platform.claude.com/docs/en/release-notes/overview |
    | API parameters / request format / stop_reason | https://platform.claude.com/docs/en/api/messages |
    | Prompt Caching (5-minute / 1-hour) | https://platform.claude.com/docs/en/build-with-claude/prompt-caching |
@@ -36,12 +36,13 @@ Steps:
    | Token Counting | https://platform.claude.com/docs/en/build-with-claude/token-counting |
    | Claude Code / CLI / desktop app / hooks / skills | https://code.claude.com/docs/en/overview |
    | Overview of all features (start here when unsure how to classify) | https://platform.claude.com/docs/en/docs/build-with-claude/overview |
+   | Claude Partner Network / certification exams (Claude Certified Associate / Developer / Architect) / business partnerships | **Outside the scope of platform.claude.com/docs** (that domain only has an API for TLS tunnel certificates, unrelated to certification). Check claude.com/news, claude.com/partners, and Pearson VUE's official pages, plus WebSearch |
 
    Note: the Claude Code docs live on a separate domain, `code.claude.com/docs`, apart from the API docs.
 
    ⚠️ Tell a "feature question" apart from an "availability question":
    - **Feature question** (how to use this parameter, how large is this model's context) → check the docs spec page.
-   - **Availability question** (is it still usable, why is it disabled, is it available in my region) → **the docs spec pages go stale and don't post deprecation notices; check news + WebSearch instead**. The docs' models/overview page may still say "generally available" for a model that a government order, export control, or service outage has already taken offline.
+   - **Availability question** (is it still usable, why is it disabled, is it available to my account or in my region) → **the docs spec pages go stale and don't post deprecation notices; check news + WebSearch instead**. The docs' models/overview page may still say "generally available" for a model that a government order, export control, or service outage has already taken offline.
    - **If the user provides a screenshot / client view** (e.g. a menu showing a model as disabled) → **trust the actual client state**; don't use the docs spec page to argue against what the user sees in front of them.
 
 3. Use WebFetch to read the matching page directly (when a question maps to several pages, read the most relevant one first).
