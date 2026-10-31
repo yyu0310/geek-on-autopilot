@@ -224,7 +224,7 @@ python3 relink.py --root /path/to/parent --map "/old/abs=/new/abs" --dry-run
 
 當 Markdown 轉檔給的控制力不夠（每段不同字體與顏色、有樣式的表格），改用程式碼（dolanmiu/docx 函式庫）寫 Word 文件。SOP 收錄了實際轉檔踩出來的坑，例如會讓 LibreOffice 把所有 CJK 字體換掉的 italics 設定。`docx_pdf.py` 先 lint 腳本，再轉 PDF，附字體檢查與自動重試。`docx-gen-tools/workspace/` 裡有一份驗證過的完整範例。
 
-需要：Node.js（在 `docx-gen-tools/` 跑一次 `npm install`）、Python 3、LibreOffice、Poppler（`brew install poppler && brew install --cask libreoffice`）
+需要：Node.js（在 `docx-gen-tools/` 跑一次 `npm install`）、Python 3、LibreOffice、Poppler（`brew install poppler && brew install --cask libreoffice`） 不保證輸出精確字體，macOS 上的 LibreOffice 挑 CJK 字體不固定。
 
 ```
 /docx-gen 一頁式專案簡介，附有樣式的預算表

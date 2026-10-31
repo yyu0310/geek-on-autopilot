@@ -224,7 +224,7 @@ python3 relink.py --root /path/to/parent --map "/old/abs=/new/abs" --dry-run
 
 Writes a Word document with code (the dolanmiu/docx library) when Markdown conversion gives you too little control: different fonts and colors per paragraph, styled tables. The SOP carries the traps found in real conversions, such as the italics setting that makes LibreOffice swap every CJK font. `docx_pdf.py` lints the script, then converts to PDF with a font check and automatic retries. A verified example is in `docx-gen-tools/workspace/`.
 
-Requires: Node.js (run `npm install` once in `docx-gen-tools/`), Python 3, LibreOffice, Poppler (`brew install poppler && brew install --cask libreoffice`)
+Requires: Node.js (run `npm install` once in `docx-gen-tools/`), Python 3, LibreOffice, Poppler (`brew install poppler && brew install --cask libreoffice`) Exact fonts are not guaranteed, because LibreOffice on macOS picks CJK fonts non-deterministically.
 
 ```
 /docx-gen a one-page project brief with a styled budget table
