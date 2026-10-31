@@ -1,8 +1,8 @@
 強制用網路即時資訊回答問題，禁止只靠訓練資料。適用於 AI 前沿技術、工具功能迭代、版本支援性等任何時效敏感的問題。
 
 用法：
-- `/latest [問題]` — 搜尋指定問題
-- `/latest` — 沒帶問題時，對話中最近一個時效敏感的問題就是目標
+- `/latest [問題]`：搜尋指定問題
+- `/latest`：沒帶問題時，對話中最近一個時效敏感的問題就是目標
 
 核心原則：
 - 訓練資料有截止日，AI 領域的工具、模型、API 幾乎每週都在變，**訓練資料裡的答案一律視為過時候選，不是結論**
@@ -18,6 +18,8 @@
    - 試抓 `[文檔站]/llms.txt`，很多現代文檔站都有這個索引，grep 關鍵字直接定位頁面
    - 用 WebFetch 讀對應的文檔頁，找 changelog / release notes / what's new 區塊
    - GitHub 上的工具直接 WebFetch repo 的 README / CHANGELOG / Releases 頁
+   - 要判斷「某個資料集有沒有收錄 X」，別信介紹文字：`git clone --depth 1` 到暫存資料夾再 grep。GitHub code search 會略過大檔、也容易被限流，搜到 0 筆不代表沒有
+   - 找 GitHub 上的工具：`gh search repos` 先用 1 到 2 個寬詞（如 `weather data`），再自己篩選。多字精確詞常回 0 筆
 
 3. 沒有明確目標文檔、或文檔不夠新時，WebSearch 補充，關鍵字策略：
    - 加上當前年份或「latest」過濾舊文
