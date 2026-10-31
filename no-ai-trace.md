@@ -10,7 +10,7 @@ Steps:
    - Text pasted after the command → check that.
    - None → check the most recent writing output in the conversation.
 
-2. Scan against the Part 1 red-flag list (Rules 1–17), rule by rule. Catch the mechanically detectable ones directly and judge the semantic ones sentence by sentence.
+2. Scan against the Part 1 red-flag list (Rules 1 to 17), rule by rule. Catch the mechanically detectable ones directly and judge the semantic ones sentence by sentence.
 
 3. Run the final "self-check before output" list below.
 
@@ -92,10 +92,10 @@ Banned pattern: `...is not just [A]; it is also [B]...` and every variant of "ne
 
 ### 9. Em dash and semicolon
 
-Never use `—` under any circumstances. In English prose, don't use `;` to chain clauses either, because it reads as AI. Use a comma or a period, or restructure the sentence. In a plain list, use a middle dot `·` as the separator.
+Never use the em dash (U+2014) under any circumstances. The examples below write it as `{em dash}`. In English prose, don't use `;` to chain clauses either, because it reads as AI. Use a comma or a period, or restructure the sentence. In a plain list, use a middle dot `·` as the separator.
 
-- (X) `The results were clear — we needed a new approach.`
-- (X) `The product is built for traders — not institutions.`
+- (X) `The results were clear {em dash} we needed a new approach.`
+- (X) `The product is built for traders {em dash} not institutions.`
 - (X) `Issuer of the invoices; payments infrastructure.`
 - (X) `The audit finished on Friday; the fixes shipped on Monday.`
 
@@ -130,6 +130,10 @@ AI loves a question to build suspense, then answers it itself. Cut the question,
 
 - (X) `Furthermore, the platform supports multiple chains. Moreover, fees are competitive.`
 - (X) `In conclusion, this represents a significant step forward.`
+
+In a message that declines or turns someone down, don't open the next paragraph with a pivot like `That said` either. Turning around right after the refusal reads as brushing the person off, and it comes across as rude.
+
+- (X) `That said, if you know anyone who's deep into logistics software, I'd be happy to connect and chat.`
 
 ### 14. Hedge sentences
 
@@ -237,6 +241,7 @@ Cut the first half, just say B.
 ### 13. Transition-word overuse → restructure, let the logic speak
 
 - (O) `The platform supports multiple chains and keeps fees competitive.`
+- (O) `If you know anyone who's deep into logistics software, I'd be happy to connect and chat.`
 
 ### 14. Hedge sentences → cut them, say the point
 
@@ -248,7 +253,7 @@ Cut the first half, just say B.
 
 ### 16. Binary sentimental ending → state the probability or consequence
 
-- (O) `A dovish tilt likely pushes QQQ up 4–6% within 72 hours. A hawkish surprise cuts growth stocks 3% on the day.`
+- (O) `A dovish tilt likely pushes QQQ up 4% to 6% within 72 hours. A hawkish surprise cuts growth stocks 3% on the day.`
 
 ### 17. Parallel-subject splitting → combine into one sentence
 
@@ -269,11 +274,11 @@ Cut the first half, just say B.
 - Container sentences: any structure like `contains an analysis of` / `provides an indication of`?
 - Roundabout: any winding verbs like `serve to illuminate` / `aims to facilitate`?
 - Abstract phase: any vague description like "in the implementation phase"? Change to a real action or number.
-- Em dash and semicolon: any `—`, or a `;` chaining clauses in English prose? Replace with a comma or a period, or restructure. Use `·` for a pure list separator.
+- Em dash and semicolon: any em dash (U+2014), or a `;` chaining clauses in English prose? Replace with a comma or a period, or restructure. Use `·` for a pure list separator.
 - Confirmation: any "the X is real"? Replace with a concrete number or fact.
 - Parentheses: any parenthetical asides? Restructure or cut. A name + title + organization wrapped in parentheses becomes `by X, Title of Org:`. Functional ones like `(45 min)` stay.
 - Rhetorical: any question followed by self-answer? Cut the question, state the conclusion.
-- Transitions: any `Furthermore` / `Moreover` / `In conclusion`? Restructure.
+- Transitions: any `Furthermore` / `Moreover` / `In conclusion`? Does the paragraph after a decline open with `That said`? Restructure.
 - Hedge: any "It's worth noting" / "It should be mentioned"? Cut it.
 - Fragment parallelism: three short sentences stacked for drama? Combine into one or keep just one.
 - Binary sentiment: any "One X, two outcomes, and both have a price" ending? Replace with a concrete probability and magnitude.
