@@ -21,14 +21,14 @@ description: 從各家 AI 公司的官方文件、官方消息與 changelog 抓�
 
 | 公司 / 產品 | 官方 blog / news | 官方文件 | 官方 X | 備註 |
 |---|---|---|---|---|
-| **xAI / Grok** | https://x.ai/news | https://docs.x.ai | xai, grok | Grok 產品消息常先在 X 平台公布 |
+| **xAI / Grok / Grok Build** | https://x.ai/news | https://docs.x.ai | grok, grokbuild, SpaceXAI | Grok 產品消息常先在 X 平台公布。xAI 已併入 SpaceX，近期官方聲明多走 SpaceXAI 帳號。Grok Build 版本紀錄：https://x.ai/build/changelog，CLI 本機也附官方文件，可離線 grep |
 | **OpenAI / ChatGPT / Codex** | https://openai.com/news/ | https://platform.openai.com/docs | OpenAI, OpenAIDevs | ChatGPT release notes：在 help.openai.com 搜「release notes」。Codex：openai.com/codex |
-| **Google / Gemini** | https://blog.google/technology/ai/ 與 https://deepmind.google/discover/blog/ | https://ai.google.dev | GoogleDeepMind, GoogleAIStudio | 文件為 Gemini API。agentic IDE Antigravity 在 https://antigravity.google |
+| **Google / Gemini / Antigravity** | https://blog.google/technology/ai/ 與 https://deepmind.google/discover/blog/ | https://ai.google.dev | GoogleDeepMind, GoogleAIStudio | 文件為 Gemini API。agentic IDE Antigravity 在 https://antigravity.google |
 | **DeepSeek** | https://api-docs.deepseek.com/news | https://api-docs.deepseek.com | deepseek_ai | 模型發布多在 GitHub 與 X |
-| **Apple** | https://www.apple.com/newsroom/ 與 https://machinelearning.apple.com | 無 | Apple | Apple Intelligence 與 Siri 動態多經由 Newsroom 與 WWDC 發布 |
+| **Apple / Siri AI** | https://www.apple.com/newsroom/ 與 https://machinelearning.apple.com | 無 | Apple | Apple Intelligence 與 Siri 動態多經由 Newsroom 與 WWDC 發布 |
 | **Qwen / 千問 / 阿里巴巴** | https://qwenlm.github.io/blog/ | https://help.aliyun.com | Alibaba_Qwen | 文件為百煉 / DashScope API。聊天入口：chat.qwen.ai |
 | **智譜 Z.ai / GLM** | https://z.ai/blog | https://docs.z.ai | Zai_org | 開源權重在 Hugging Face 的 `zai-org` |
-| **Meta AI** | https://ai.meta.com/blog/ 與 https://llama.com | 無 | AIatMeta | 涵蓋 Meta 的模型系列與開源權重發布 |
+| **Meta AI** | https://ai.meta.com/blog/ 與 https://llama.com | 無 | AIatMeta | 涵蓋 Meta 的模型系列與開源權重發布，包含 Muse Spark（agentic coding，API 收費）與 Llama 系列 |
 | **跨家比較平台** | Artificial Analysis https://artificialanalysis.ai、Hugging Face Open LLM Leaderboard、Epoch AI https://epoch.ai | 無 | ArtificialAnlys | 用來做跨家能力與性價比對照 |
 
 ### Tier 2：有明確相關才查，週報有料才收
@@ -41,6 +41,21 @@ description: 從各家 AI 公司的官方文件、官方消息與 changelog 抓�
 | **Manus** | https://manus.im/blog | ManusAI_HQ |
 | **Cursor** | https://cursor.com/changelog 與 https://cursor.com/blog | cursor_ai |
 | **Perplexity** | https://www.perplexity.ai/hub/blog | perplexity_ai |
+
+## 已知抓取失效（2026 年 10 月實測，抓到就別硬試）
+
+| 來源 | 症狀 | 改走 |
+|---|---|---|
+| openai.com/news/ | WebFetch 回 403 | WebSearch 限定 openai.com 網域 |
+| x.ai/news | WebFetch 回 403 | WebSearch 限定 x.ai 網域 |
+| qwenlm.github.io/blog/ | WebFetch 拿到 2025 年舊內容，不是當前頁 | 先用第三方 release tracker 定位日期，再回一手來源確認 |
+| ai.meta.com/blog/ | 最新文章停在 2026 年 7 月 | 同上，或看 llama.com |
+| z.ai/blog | 回 404 | WebSearch 限定 z.ai 網域，開源權重看 Hugging Face 的 `zai-org` |
+| apple.com/newsroom/ | WebFetch 只拿到導覽模板，沒有文章 | WebSearch 限定 apple.com/newsroom |
+
+這張表會過時，重新驗證過再信。
+
+**斷言紀律：** 要分清「我手上的工具看得到什麼」和「廠商到底有沒有這個產品」。工具裡的模型清單是帳號、方案與配額的投影，不是廠商的產品線。看到「某家沒有 X」，先問是不是權限、方案、配額或版本造成的，再下結論。
 
 ## 步驟
 
