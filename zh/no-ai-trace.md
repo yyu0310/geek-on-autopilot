@@ -10,7 +10,7 @@
    - 用戶指令後有貼文字 → 檢查那段
    - 沒有 → 檢查對話中最近一次的文案輸出
 
-2. 按以下 Part 1 禁止清單（Rule 1–17）逐條掃描，機械可判斷的直接抓，語意型的逐句判斷。
+2. 按以下 Part 1 禁止清單（Rule 1 到 17）逐條掃描，機械可判斷的直接抓，語意型的逐句判斷。
 
 3. 按以下「輸出前自查」清單做最終確認。
 
@@ -92,10 +92,10 @@
 
 ### 9. 破折號（Em Dash）與分號
 
-任何情況都不用 `—`。英文散文也不用 `;` 串接子句，讀起來像 AI。改用逗號或句號，或重組句子。純清單分隔改用中點 `·`。
+任何情況都不用破折號（U+2014）。下方範例以 `{em dash}` 代表該字元。英文散文也不用 `;` 串接子句，讀起來像 AI。改用逗號或句號，或重組句子。純清單分隔改用中點 `·`。
 
-- (X) `The results were clear — we needed a new approach.`
-- (X) `The product is built for traders — not institutions.`
+- (X) `The results were clear {em dash} we needed a new approach.`
+- (X) `The product is built for traders {em dash} not institutions.`
 - (X) `Issuer of the invoices; payments infrastructure.`
 - (X) `The audit finished on Friday; the fixes shipped on Monday.`
 
@@ -130,6 +130,10 @@ AI 愛用問句製造懸念，再自己回答。直接刪問句，說結論。
 
 - (X) `Furthermore, the platform supports multiple chains. Moreover, fees are competitive.`
 - (X) `In conclusion, this represents a significant step forward.`
+
+婉拒或拒絕類的訊息，下一段也不要用 `That said` 這類轉折詞開頭。拒絕後立刻轉折，讀起來像在打發對方，也不禮貌。
+
+- (X) `That said, if you know anyone who's deep into logistics software, I'd be happy to connect and chat.`
 
 ### 14. Hedge 保留句
 
@@ -237,6 +241,7 @@ AI 愛用問句製造懸念，再自己回答。直接刪問句，說結論。
 ### 13. 過渡詞濫用 → 重組句子，讓邏輯自己說話
 
 - (O) `The platform supports multiple chains and keeps fees competitive.`
+- (O) `If you know anyone who's deep into logistics software, I'd be happy to connect and chat.`
 
 ### 14. Hedge 保留句 → 直接刪除，說重點
 
@@ -248,7 +253,7 @@ AI 愛用問句製造懸念，再自己回答。直接刪問句，說結論。
 
 ### 16. 二元框架煽情結尾 → 說機率或後果
 
-- (O) `A dovish tilt likely pushes QQQ up 4–6% within 72 hours. A hawkish surprise cuts growth stocks 3% on the day.`
+- (O) `A dovish tilt likely pushes QQQ up 4% to 6% within 72 hours. A hawkish surprise cuts growth stocks 3% on the day.`
 
 ### 17. 平行主詞拆句 → 合成一句
 
@@ -269,11 +274,11 @@ AI 愛用問句製造懸念，再自己回答。直接刪問句，說結論。
 - 容器句：有沒有 `contains an analysis of` / `provides an indication of` 這類結構？
 - 繞圈：有沒有 `serve to illuminate` / `aims to facilitate` 這類迂迴動詞？
 - 抽象階段：有沒有「in the implementation phase」這類空泛描述？改成實際行動或數字。
-- 破折號與分號：有沒有 `—`，或英文散文用 `;` 串接子句？換成逗號或句號，或重組。純清單分隔用 `·`。
+- 破折號與分號：有沒有破折號（U+2014），或英文散文用 `;` 串接子句？換成逗號或句號，或重組。純清單分隔用 `·`。
 - 確認句：有沒有「the X is real」？換成具體數字或事實。
 - 括號：有沒有括號補述？重組或刪除。「姓名＋職稱＋機構」包在括號裡的，改成 `by X, Title of Org:`；`(45 min)` 這類功能性括號保留。
 - 自問自答：有沒有問句接自答？刪問句，直接說結論。
-- 過渡詞：有沒有 `Furthermore` / `Moreover` / `In conclusion`？重組句子。
+- 過渡詞：有沒有 `Furthermore` / `Moreover` / `In conclusion`？婉拒訊息的下一段有沒有用 `That said` 開頭？重組句子。
 - Hedge：有沒有「It's worth noting」/ 「It should be mentioned」？直接刪。
 - 碎句排比：有沒有三個連續超短句堆疊製造戲劇感？合成一句或只留一句。
 - 二元煽情：有沒有「One X, two outcomes, and both have a price」這類收尾？換成具體機率和幅度。
