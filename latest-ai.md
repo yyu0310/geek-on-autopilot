@@ -3,7 +3,7 @@ name: latest-ai
 description: Answer frontier-AI questions or compile a past-week product roundup by pulling from each AI company's official docs, news pages, and changelogs.
 ---
 
-Pull from the primary, official sources of each AI company (docs, blog, release notes, official X accounts) to answer frontier-AI questions or summarize recent product news. It sits alongside two sibling commands: `/latest` handles general time-sensitive search, `/claude-docs` handles Claude only, and `/latest-ai` covers every other vendor plus cross-vendor roundups. It only looks at the companies in the tables below and always goes back to the primary source.
+Pull from the primary, official sources of each AI company (docs, blog, release notes, official X accounts) to answer frontier-AI questions or summarize recent product news. It sits alongside two sibling commands: `/latest` handles general time-sensitive search, `/latest-claude` handles Claude only, and `/latest-ai` covers every other vendor plus cross-vendor roundups. It only looks at the companies in the tables below and always goes back to the primary source.
 
 Usage:
 - `/latest-ai [question]` looks up the answer in the official sources of the relevant companies. This is the common case.
@@ -12,7 +12,7 @@ Usage:
 Core principles (same as `/latest`):
 - Training data has a cutoff and AI changes weekly. Treat anything you remember as a **stale candidate** and check before answering, even when you feel sure.
 - Only primary sources count: official docs, official blog, release notes, official X accounts, official GitHub. Secondary sources (news, forums, tutorials) can add context, but confirm every conclusion against a primary source.
-- If the question is really about Claude's own features, use `/claude-docs` instead.
+- If the question is really about Claude's own features, use `/latest-claude` instead.
 - URLs in the tables change over time. When one returns a 404 or looks stale, WebSearch `[company name] official blog` or `[company name] official docs` to find the new location, then update this table.
 
 ## Company source routing table

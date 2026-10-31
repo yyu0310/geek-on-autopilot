@@ -7,7 +7,7 @@ Usage:
 Core principles:
 - Training data has a cutoff. AI tools, models, and APIs change almost weekly, so **treat any answer from training data as a stale candidate, not the conclusion.**
 - Even when you think you know the answer, search and verify before you reply.
-- For questions about Claude's own features, route to `/claude-docs` and its official-docs path instead.
+- For questions about Claude's own features, route to `/latest-claude` and its official-docs path instead.
 
 Steps:
 

@@ -1,10 +1,10 @@
-Look up the official Claude docs to answer questions about Claude's features, API, models, and parameters.
+Look up the official Claude docs to answer questions about Claude's features, API, models, and parameters. Formerly `/claude-docs`.
 
 Official docs domain: https://platform.claude.com/docs/en/
 
 Usage:
-- `/claude-docs [question]`: look up the given question
-- `/claude-docs`: with no question, infer what to look up from the conversation context
+- `/latest-claude [question]`: look up the given question
+- `/latest-claude`: with no question, infer what to look up from the conversation context
 
 Steps:
 
