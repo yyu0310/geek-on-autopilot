@@ -1,3 +1,9 @@
 .DS_Store
 *.swp
 *.swo
+node_modules/
+docx-gen-tools/workspace/*.docx
+docx-gen-tools/workspace/*.pdf
+docx-gen-tools/workspace/*.jpg
+__pycache__/
+*.pyc
