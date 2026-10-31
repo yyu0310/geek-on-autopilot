@@ -2,7 +2,7 @@ English | [繁體中文](README.zh-TW.md) | [简体中文](README.zh-CN.md)
 
 # geek-on-autopilot
 
-Twelve custom slash commands that make Claude Code more useful.
+Fifteen custom slash commands that make Claude Code more useful.
 
 ## Problems solved
 
@@ -15,6 +15,9 @@ Twelve custom slash commands that make Claude Code more useful.
 - No standardized QA before exporting Marp presentations
 - Pandoc's default fonts break Chinese-English mixed PDFs
 - AI answers medical questions with confident hallucinations and no authoritative source
+- Moving a folder silently breaks permission rules, scheduled jobs, and doc links
+- Markdown converters give no per-paragraph control over fonts, colors, and tables in Word
+- Sharing a private HTML page with a few friends, without putting it on the public web
 
 ## Commands
 
@@ -32,6 +35,9 @@ Twelve custom slash commands that make Claude Code more useful.
 | `/md-to-pdf` | Converts Markdown to PDF with a bundled PingFang TC font template |
 | `/recover-from-log` | Recovers deleted or mangled file content from Claude Code session logs |
 | `/med-check` | Answers medical questions from authoritative literature, never training data |
+| `/ref-audit` | Finds every hard-coded path reference before a folder is moved or renamed |
+| `/docx-gen` | Writes Word documents with code for full formatting control, exports a clean PDF |
+| `/private-site` | Publishes a static site as an invite-only page on Cloudflare Pages |
 
 ## Install
 
@@ -55,7 +61,7 @@ ln -sf "$(pwd)/latest.md" ~/.claude/commands/latest.md
 
 After installing, type `/latest`, `/claude-docs`, etc. in Claude Code to use them.
 
-`/md-to-pdf` and `/marp-export` call a Python script in the repo root (`md2pdf.py`, `marp_export.py`). Keep the clone in place, since the commands run those scripts from it.
+Several commands call a script in the repo root (`md2pdf.py`, `marp_export.py`, `ref_audit.py`, `relink.py`, `docx_pdf.py`, `cf_private_site.py`, `site_lock_check.sh`). Keep the clone in place, since the commands run those scripts from it.
 
 ## Commands in detail
 
@@ -194,6 +200,44 @@ This is a literature-research aid, not a medical diagnosis.
 ```
 /med-check [your health question]
 /med-check                     # use the most recent health question in the conversation
+```
+
+---
+
+### `/ref-audit`
+
+Run it before you move, rename, or delete a folder. `ref_audit.py` sweeps the five places that tend to hard-code paths and then break silently: the project tree, Claude Code settings (permission allowlists), the Claude memory folder, `~/.claude/commands` symlinks, and schedulers (launchd, cron, sync configs). It also searches URL-encoded spellings such as `%20`, and it reports `file:line` only, never the matched line. After a move that changes folder depth, `relink.py` recomputes the broken Markdown relative links.
+
+Requires: Python 3. The scheduler domain and the `sed -i ''` examples assume macOS.
+
+```
+/ref-audit projects/old-site
+python3 ref_audit.py "old-name" "new-name" --root /path/to/project
+python3 relink.py --root /path/to/parent --map "/old/abs=/new/abs" --dry-run
+```
+
+---
+
+### `/docx-gen`
+
+Writes a Word document with code (the dolanmiu/docx library) when Markdown conversion gives you too little control: different fonts and colors per paragraph, styled tables. The SOP carries the traps found in real conversions, such as the italics setting that makes LibreOffice swap every CJK font. `docx_pdf.py` lints the script, then converts to PDF with a font check and automatic retries. A verified example is in `docx-gen-tools/workspace/`.
+
+Requires: Node.js (run `npm install` once in `docx-gen-tools/`), Python 3, LibreOffice, Poppler (`brew install poppler && brew install --cask libreoffice`)
+
+```
+/docx-gen a one-page project brief with a styled budget table
+```
+
+---
+
+### `/private-site`
+
+Publishes a static site or HTML page as an invite-only site: Cloudflare Pages direct upload with a Zero Trust Access allowlist, so only invited emails that enter a one-time code can view it. The SOP covers a content audit before anything goes up, locking the project before the first deploy, a lock check of about 40 probes (`site_lock_check.sh`), a prompt for an independent review, and allowlist changes later (`cf_private_site.py`). Test only sites you own.
+
+Requires: a Cloudflare account (the Zero Trust Free plan is enough), Node.js with wrangler, Python 3, curl. Credentials stay in a file you create and point to with the `CF_ENV_FILE` environment variable.
+
+```
+/private-site publish ./dist for alice@example.com and bob@example.com
 ```
 
 ## License

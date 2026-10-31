@@ -14,7 +14,19 @@ Each `.md` file in the root becomes a `/command-name` slash command when symlink
 
 **Language.** English is canonical in the repo root; each command's Traditional Chinese (zh-TW) translation lives in `zh/` with the same filename. The root English file is what installs as the `/command` and shows in `/help`, so it's the front door for international users; `zh/` serves zh-TW/zh-CN readers and anyone who wants to run a command in Chinese. When editing a command, update both the root file and its `zh/` counterpart. The `claude-docs.md` routing table targets English-language official docs because that's where Claude's documentation lives.
 
-**Scripts.** Two commands ship a Python script in the repo root: `md-to-pdf.md` calls `md2pdf.py`, and `marp-export.md` calls `marp_export.py`. The scripts use only the standard library, resolve `reference_pingfang.docx` relative to themselves, and include a `--selftest` that runs in a temporary folder. After editing a script, run its selftest and update the matching command file.
+**Scripts.** Five commands ship scripts in the repo root, and each command file calls them by relative path:
+
+| Command | Scripts |
+| --- | --- |
+| `md-to-pdf.md` | `md2pdf.py` (with `reference_pingfang.docx`) |
+| `marp-export.md` | `marp_export.py` |
+| `ref-audit.md` | `ref_audit.py`, `relink.py` |
+| `docx-gen.md` | `docx_pdf.py` (imports `md2pdf.py`, so keep the two together), plus `docx-gen-tools/` with `package.json` and `workspace/example_qa_test.js` |
+| `private-site.md` | `cf_private_site.py`, `site_lock_check.sh` |
+
+The Python scripts use only the standard library (the one Node dependency is `docx` in `docx-gen-tools/`; `node_modules/` is git-ignored). `site_lock_check.sh` needs only bash and curl. Every script has a `--selftest` that runs in a temporary folder with no network: `cf_private_site.py` uses a fake Cloudflare API and `site_lock_check.sh` a fake curl. `cf_private_site.py` has no default credential location: it requires the `CF_ENV_FILE` environment variable and exits 5 without it. Scripts resolve helper files relative to themselves. After editing a script, run its selftest and update the matching command file in both languages.
+
+A helper prompt or template that a command needs (like the review prompt in `private-site.md`) is embedded in the command file itself. Every `.md` in the repo root is installed as a slash command, so a separate template `.md` there would turn into a bogus command.
 
 ## What not to change
 

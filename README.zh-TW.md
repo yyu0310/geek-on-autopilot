@@ -2,7 +2,7 @@
 
 # geek-on-autopilot
 
-十二個讓 Claude Code 更順手的自訂斜線指令。
+十五個讓 Claude Code 更順手的自訂斜線指令。
 
 ## 解決的問題
 
@@ -15,6 +15,9 @@
 - Marp 簡報匯出前沒有統一的 QA 流程
 - Pandoc 預設字體不支援中英混排，輸出 PDF 字體很醜
 - AI 回答醫療問題會自信地幻覺，又沒有權威來源可查
+- 搬移資料夾後，權限規則、排程與文件連結會悄悄失效
+- Markdown 轉 Word 無法逐段控制字體、顏色與表格
+- 想讓幾位朋友看一個私人 html 頁面，又不想公開上網
 
 ## 指令一覽
 
@@ -32,6 +35,9 @@
 | `/md-to-pdf` | MD 轉 PDF，套用 PingFang TC 字體模板 |
 | `/recover-from-log` | 從 session log 救回被改壞或誤刪的檔案內容 |
 | `/med-check` | 醫療問題查權威文獻作答，禁用訓練資料 |
+| `/ref-audit` | 搬移或改名資料夾前，掃出所有寫死路徑的引用 |
+| `/docx-gen` | 用程式碼寫 Word 文件，逐段控制排版並輸出 PDF |
+| `/private-site` | 把靜態網站上架成 invite-only 私人網站 |
 
 ## 安裝
 
@@ -55,7 +61,7 @@ ln -sf "$(pwd)/latest.md" ~/.claude/commands/latest.md
 
 安裝後在 Claude Code 輸入 `/latest`、`/claude-docs` 等即可使用。
 
-`/md-to-pdf` 與 `/marp-export` 會呼叫 repo 根目錄的 Python 腳本（`md2pdf.py`、`marp_export.py`），clone 下來的資料夾請留在原位，指令會從那裡執行腳本。
+有幾個指令會呼叫 repo 根目錄的腳本（`md2pdf.py`、`marp_export.py`、`ref_audit.py`、`relink.py`、`docx_pdf.py`、`cf_private_site.py`、`site_lock_check.sh`），clone 下來的資料夾請留在原位，指令會從那裡執行腳本。
 
 ## 指令說明
 
@@ -194,6 +200,44 @@ Marp 簡報交稿前 QA 加匯出 PDF，由 repo 根目錄的 `marp_export.py` �
 ```
 /med-check [你的健康問題]
 /med-check                     # 用對話中最近一個健康問題
+```
+
+---
+
+### `/ref-audit`
+
+資料夾搬移、改名、刪除前先跑。`ref_audit.py` 會掃五個最容易寫死路徑、又會悄悄壞掉的地方：專案目錄、Claude Code 設定（權限白名單）、Claude memory 資料夾、`~/.claude/commands` 的 symlink，以及排程（launchd、cron、同步設定檔）。它也會搜 `%20` 這類 URL 編碼寫法，而且只回報 `檔案:行號`，不印命中的那一行。搬移後層數有變時，`relink.py` 會重新計算斷掉的 Markdown 相對連結。
+
+需要：Python 3。排程掃描域與 `sed -i ''` 範例以 macOS 為前提。
+
+```
+/ref-audit projects/old-site
+python3 ref_audit.py "old-name" "new-name" --root /path/to/project
+python3 relink.py --root /path/to/parent --map "/old/abs=/new/abs" --dry-run
+```
+
+---
+
+### `/docx-gen`
+
+當 Markdown 轉檔給的控制力不夠（每段不同字體與顏色、有樣式的表格），改用程式碼（dolanmiu/docx 函式庫）寫 Word 文件。SOP 收錄了實際轉檔踩出來的坑，例如會讓 LibreOffice 把所有 CJK 字體換掉的 italics 設定。`docx_pdf.py` 先 lint 腳本，再轉 PDF，附字體檢查與自動重試。`docx-gen-tools/workspace/` 裡有一份驗證過的完整範例。
+
+需要：Node.js（在 `docx-gen-tools/` 跑一次 `npm install`）、Python 3、LibreOffice、Poppler（`brew install poppler && brew install --cask libreoffice`）
+
+```
+/docx-gen 一頁式專案簡介，附有樣式的預算表
+```
+
+---
+
+### `/private-site`
+
+把靜態網站或 html 頁面上架成 invite-only 私人網站：Cloudflare Pages 直接上傳加 Zero Trust Access 白名單，只有受邀 email 輸入一次性驗證碼才看得到。SOP 涵蓋上架前的內容盤點、第一次部署前先上鎖、約 40 個探測的鎖驗證（`site_lock_check.sh`）、獨立審查用的 prompt，以及之後調整白名單（`cf_private_site.py`）。只測試你自己的網站。
+
+需要：Cloudflare 帳號（Zero Trust Free 方案即可）、Node.js 與 wrangler、Python 3、curl。憑證放在你自己建立的檔案，用 `CF_ENV_FILE` 環境變數指向它。
+
+```
+/private-site 把 ./dist 上架，開放 alice@example.com 與 bob@example.com
 ```
 
 ## 授權

@@ -1,8 +1,8 @@
 # geek-on-autopilot
 
-> Twelve Claude Code slash commands for automating repetitive workflow steps.
+> Fifteen Claude Code slash commands for automating repetitive workflow steps.
 
-Twelve custom slash commands for Claude Code users who want to reduce friction in daily workflows. Each command is a standalone `.md` file. Symlink it to `~/.claude/commands/` to activate.
+Fifteen custom slash commands for Claude Code users who want to reduce friction in daily workflows. Each command is a standalone `.md` file. Symlink it to `~/.claude/commands/` to activate.
 
 ## Commands
 
@@ -18,6 +18,9 @@ Twelve custom slash commands for Claude Code users who want to reduce friction i
 - [/md-to-pdf](md-to-pdf.md): Converts Markdown to PDF via md2pdf.py (lint, pandoc, LibreOffice, pdffonts check), using a bundled PingFang TC reference template for clean CJK typography. Supports a one-page long version and word-count limits.
 - [/recover-from-log](recover-from-log.md): Recovers deleted or mangled file content from Claude Code session logs. Diagnoses which session and operation caused the damage, extracts the pre-change original from Read tool-results and Edit old_strings, and restores surgically while keeping good changes. Avoids the bare-grep trap where a skill name matches every session.
 - [/med-check](med-check.md): Answers medical and health questions from authoritative literature instead of training data. Retrieval-first workflow over Cochrane, clinical guidelines, PubMed (free E-utilities API), and WHO/CDC/FDA. Grades every claim by evidence level, cites PMIDs, says so when evidence is missing, screens red-flag symptoms. A literature-research aid, not medical diagnosis.
+- [/ref-audit](ref-audit.md): Reference audit before a folder is moved, renamed, or deleted. ref_audit.py scans the project tree, Claude Code settings, memory, command symlinks, and schedulers for hard-coded paths, including URL-encoded spellings. relink.py repairs Markdown relative links after a move.
+- [/docx-gen](docx-gen.md): Writes Word documents with code (dolanmiu/docx) for per-paragraph fonts, colors, and tables, then exports a PDF. docx_pdf.py lints the script and converts with LibreOffice, a font check, and automatic retries.
+- [/private-site](private-site.md): Publishes a static site as an invite-only page on Cloudflare Pages with a Zero Trust Access email allowlist. Covers content audit, lock-first deployment, a curl lock check (site_lock_check.sh), an independent review prompt, and allowlist management (cf_private_site.py).
 
 ## Install
 
