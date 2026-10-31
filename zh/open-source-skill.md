@@ -9,8 +9,8 @@ SKILL_DIR        = /your/local/path/to/your/skills/folder/
 ```
 
 用法：
-- `/open-source-skill [skill 名稱]` — 在 SKILL_DIR 尋找對應 .md
-- `/open-source-skill` — 從 IDE 當前開啟的 skill 檔開始
+- `/open-source-skill [skill 名稱]`：在 SKILL_DIR 尋找對應 .md
+- `/open-source-skill`：從 IDE 當前開啟的 skill 檔開始
 
 ---
 
@@ -20,9 +20,11 @@ SKILL_DIR        = /your/local/path/to/your/skills/folder/
 
 - 對其他用戶是否有獨立價值？（不依賴個人私有資料或特定工具）
 - 去掉個人資訊後，核心邏輯是否仍然完整可用？
+- **來源是不是別人的？** 從別人那邊下載、改編、蒸餾來的，一律不開源，不論對方有沒有授權，署名不能替代這個判斷。判斷靠證據，不靠印象：來源檔有「來源／改編自／上游／原版／蒸餾自」這類字樣，或步驟順序與某個公開 skill 對得上（有疑慮就 curl 上游原文，比對標題與範例），就視為第三方來源。用戶的印象與檔案衝突時，把證據攤給他看，不要順著印象走。
 
-⏸ 兩個都 Yes → 繼續 Step 1。
+⏸ 前兩項 Yes、第三項 No → 繼續 Step 1。
 有疑慮 → 停下來討論，保留在個人 Skill 即可，不必強行開源。
+第三項 Yes（第三方來源）→ 停手回報，不清理、不翻譯、不進 repo。
 
 ---
 
@@ -51,6 +53,9 @@ grep -n "<your-github-username>" [檔案]
 
 # 個人姓名（填入你的名字）
 grep -n "<your-name>" [檔案]
+
+# 公司或雇主名稱
+grep -n "<your-company>" [檔案]
 
 # 外部本地檔依賴
 grep -n "讀取規則檔\|從以下路徑\|/Users/" [檔案]
@@ -89,13 +94,16 @@ grep -n "讀取規則檔\|從以下路徑\|/Users/" [檔案]
    - 讀取本地規則檔的步驟 → 把規則內容全部內嵌進 skill 本體
    - 確認內嵌後 skill 可獨立運作，不需要任何本地檔案
 
-   **個人資訊：**
+   **公司名稱與個人資訊：**
+   - 公司或雇主名稱 → 改成 `your company`、`the platform`，或直接刪除
    - 個人信箱 → `your-email@example.com`
    - 個人姓名 → 刪除或改為通用稱呼
 
 3. **把清理過的中文翻成根目錄英文檔** `REPO_LOCAL_PATH/[skill名稱].md`：
    - 寫成 native 英文、遵守 `/no-ai-trace` 原則，不是逐字機翻。這個 repo 是作品集門面，英文品質就是它的第一印象。
    - 有 YAML frontmatter 的 skill：保留 frontmatter，`description` 翻成英文。
+
+**附帶腳本的 skill：** 腳本清理完必須實跑 `--selftest`，並對照自用版的通過數，兩邊都全過才算清理成功，不能只信 subagent 的自我回報。用 subagent 翻譯或清理時，selftest 的測試素材要保留原語言。素材翻譯後，依賴原語言的檢查可能失敗，分數下降，但問題不在程式。
 
 清理完後顯示 diff，⏸ 等用戶確認「這樣 OK」再繼續。
 
@@ -106,7 +114,7 @@ grep -n "讀取規則檔\|從以下路徑\|/Users/" [檔案]
 ⏸ 向用戶收集以下內容（可先給草稿讓用戶修改）：
 
 1. **指令一覽表的一行描述**（中文，10 字以內）
-2. **詳細說明段落**（中文，3–5 行）：
+2. **詳細說明段落**（中文，3 到 5 行）：
    - 這個指令解決什麼問題
    - 用法範例
    - 如有特殊需求（如：需要 Node.js）一併說明
@@ -164,33 +172,51 @@ zh-TW 是 source of truth，英文和簡中從 zh-TW 轉換。
 
 ## Step 6：Commit + Push
 
+先確認 commit 身分使用 noreply 信箱（geek-on-autopilot 是 public repo）：
+```bash
+git -C REPO_LOCAL_PATH config user.email
+# 應為 <id>+<your-github-username>@users.noreply.github.com
+# 若不是：git -C REPO_LOCAL_PATH config user.email "<id>+<your-github-username>@users.noreply.github.com"
+```
+
+真實姓名與電腦主機名都不能出現在 commit 的作者欄位，push 前連 `git config user.name` 一起確認。
+
+逐一加檔，不用 `git add .`。拆 commit 的原則：每支 skill 的英文正本與 zh 翻譯各一個 commit，README 與 llms.txt 文件另一個 commit。新增 skill 與更新既有 skill 都照這個拆法。GitHub 的 contribution 圖只認 commit 數不是 push 數，這樣拆也讓紀錄更精細。
+
+repo 若有無關的權限位元變動（644 變 755，搬移資料夾後常見），`git add` 一律帶 `-c core.fileMode=false`，否則 mode change 會被一起帶進 commit。zsh 不會把字串變數拆成指令與參數，別把 git 指令存成變數直接展開，用函式包。
+
 ```bash
 cd REPO_LOCAL_PATH
-git add [skill名稱].md
+g() { git -c core.fileMode=false "$@"; }
+
+g add [skill名稱].md
+g status  # 確認暫存區只有英文正本
 git commit -m "feat: add /[skill名稱] command"
 
-git add README.md README.zh-TW.md README.zh-CN.md llms.txt
+g add zh/[skill名稱].md
+g status  # 確認暫存區只有 zh 翻譯
+git commit -m "docs: add zh translation of /[skill名稱]"
+
+g add README.md README.zh-TW.md README.zh-CN.md llms.txt
+g status  # 確認暫存區只有文件檔
 git commit -m "docs: document /[skill名稱] in README and llms.txt"
 
 git push
 ```
 
-拆成兩個 commit，讓 skill 本體和文件更新維持成兩個邏輯獨立的變更。GitHub 的 contribution 圖只認 commit 數不是 push 數，這樣拆也讓紀錄更精細。
+更新既有 skill 時：英文正本的 commit 訊息改 `feat: <改了什麼> to /[skill名稱]`，zh 翻譯改 `docs: sync zh translation of ...`，文件有改才加第三個 docs commit。同一批多支 skill 就每支各自拆，不合併成一個大 commit。commit 完用 `git show --summary --format= HEAD~N..HEAD | grep -c "mode change"` 確認為 0 再 push。
 
 若 repo 有版本管理（CHANGELOG.md、release tags），push 前先更新版號。
 
 確認 push 成功後回報：GITHUB_URL
 
-Push 成功後，更新 memory 裡的指令數：
-```
-~/.claude/projects/.../memory/reference_geek_on_autopilot.md
-```
-把指令總數 +1（例如「7 個 slash commands」→「8 個」）。
+只有新增指令才需要更新各處記載的指令總數（例如「7 個 slash commands」改成「8 個」），更新既有 skill 不用動。
 
 ---
 
 ## 附錄：不適合開源的 skill 特徵
 
+- 內容從別人那邊下載、改編、蒸餾而來（第三方來源，不論授權）
 - Skill 核心邏輯依賴個人私有資料（個人財務、公司機密資料）
 - Skill 包含無法通用化的本地工具
 - 移除個人資訊後 skill 失去意義
