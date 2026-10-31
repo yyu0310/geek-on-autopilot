@@ -26,7 +26,7 @@ Twelve custom slash commands that make Claude Code more useful.
 | `/no-ai-trace` | Scans text against 17 AI writing anti-patterns |
 | `/no-ai-trace-lite` | Fast 3-grep, 4-scan check for internal documents |
 | `/no-ai-trace-zh` | Checks Chinese writing against Chinese-specific AI tells |
-| `/session-review` | Six-block session wrap-up in under 45 lines |
+| `/session-review` | Seven-block session wrap-up in under 45 lines |
 | `/marp-export` | QA check, PDF export, and output verification for Marp presentations |
 | `/open-source-skill` | Full SOP for cleaning and publishing a skill to your open-source repo |
 | `/md-to-pdf` | Converts Markdown to PDF with a bundled PingFang TC font template |
@@ -114,16 +114,17 @@ The 17 rules in `/no-ai-trace` cover buzzword stacking, "not just A but B" negat
 
 ### `/session-review`
 
-Six-block wrap-up before ending a Claude Code session:
+Seven-block wrap-up before ending a Claude Code session:
 
 1. **Key takeaways**: decisions made, things learned, insights worth keeping (max 8 items)
 2. **Loose ends**: only what truly fell out of every tracking system (⬜ to-do / ❓ needs confirmation)
-3. **Already-planned items**: unfinished but tracked elsewhere, so they don't count as loose ends
-4. **Memory suggestions**: what's worth saving to Claude's memory system
-5. **Doc check**: if code changed, whether related docs were updated
-6. **QA evidence**: for any code written, whether a real command was run and its output kept
+3. **Unfinished in this session**: what this session was meant to finish and didn't, whether or not it's tracked elsewhere
+4. **Already-planned items**: unfinished but tracked elsewhere, so they don't count as loose ends
+5. **Memory suggestions**: what's worth saving to Claude's memory system
+6. **Doc check**: if code changed, whether related docs were updated
+7. **QA evidence**: for any code written, whether a real command was run and its output kept
 
-All six blocks in under 45 lines. When several sessions work on the same thing, it distills all of them.
+All seven blocks in under 45 lines. When several sessions work on the same thing, it distills all of them.
 
 ---
 
@@ -174,7 +175,7 @@ Requires: Python 3, pandoc, LibreOffice, poppler (`brew install pandoc poppler &
 
 ### `/recover-from-log`
 
-When a Claude Code operation (a `/simplify`, an accidental delete, a bad edit) mangles your file, this recovers the original from the session logs. Every session's `.jsonl` stores the full transcript, including the content of every file Read and the `old_string` of every Edit — so the pre-change version is still in there. The skill diagnoses which session and operation caused the damage, extracts the original, and restores it surgically: it keeps the good changes instead of blindly reverting the whole thing.
+When a Claude Code operation (a `/simplify`, an accidental delete, a bad edit) mangles your file, this recovers the original from the session logs. Every session's `.jsonl` stores the full transcript, including the content of every file Read and the `old_string` of every Edit, so the pre-change version is still in there. The skill diagnoses which session and operation caused the damage, extracts the original, and restores it surgically: it keeps the good changes instead of blindly reverting the whole thing.
 
 It also handles a sharp trap. A skill's own name (like `simplify`) is injected into every session's skill list, so a bare grep matches almost every session. The skill matches the actual command invocation instead, and excludes the current session before pinning the culprit.
 

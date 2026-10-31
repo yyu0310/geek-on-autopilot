@@ -26,7 +26,7 @@
 | `/no-ai-trace` | 掃描 AI 寫作痕跡，17 條規則逐條檢查 |
 | `/no-ai-trace-lite` | 內部文件用，3 項 grep 加 4 項快掃 |
 | `/no-ai-trace-zh` | 中文文案專用的 AI 痕跡檢查 |
-| `/session-review` | Session 收尾六區塊盤點，45 行以內 |
+| `/session-review` | Session 收尾七區塊盤點，45 行以內 |
 | `/marp-export` | Marp 簡報 QA、匯出 PDF、驗收輸出 |
 | `/open-source-skill` | 資安掃描、清理、推入開源 repo 全流程 |
 | `/md-to-pdf` | MD 轉 PDF，套用 PingFang TC 字體模板 |
@@ -114,14 +114,15 @@ ln -sf "$(pwd)/latest.md" ~/.claude/commands/latest.md
 
 ### `/session-review`
 
-Claude Code session 結束前的六區塊盤點：
+Claude Code session 結束前的七區塊盤點：
 
 1. **精華蒸餾**：本次的重要決策、新知識點、值得記住的洞察（最多 8 條）
 2. **遺漏事項**：只抓真正掉出所有追蹤系統的事（⬜ 待執行 / ❓ 待確認）
-3. **已規劃事項**：未完成但已有歸屬的事，明確標示不算遺漏
-4. **Memory 建議**：哪些值得存進 Claude 的記憶系統
-5. **文檔檢查**：程式碼有改動的話，相關文件是否已同步更新
-6. **QA 證據盤點**：有寫程式的話，有沒有跑過實際指令並留有輸出
+3. **本 session 未完成**：這個 session 該做完卻沒做完的事，不論有沒有進追蹤系統
+4. **已規劃事項**：未完成但已有歸屬的事，明確標示不算遺漏
+5. **Memory 建議**：哪些值得存進 Claude 的記憶系統
+6. **文檔檢查**：程式碼有改動的話，相關文件是否已同步更新
+7. **QA 證據盤點**：有寫程式的話，有沒有跑過實際指令並留有輸出
 
 全部輸出在 45 行以內。多個 session 平行做同一件事時，會一起蒸餾。
 
