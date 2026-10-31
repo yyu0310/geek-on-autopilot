@@ -151,6 +151,8 @@ Marp 簡報交稿前 QA 加匯出 PDF，由 repo 根目錄的 `marp_export.py` �
 /marp-export /path/to/file.md
 ```
 
+想要連大綱、用講的修改和三視角審稿一起做，請看 [AI Slide Maker](https://github.com/yyu0310/ai-slide-maker)。
+
 ---
 
 ### `/open-source-skill`

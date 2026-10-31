@@ -151,6 +151,8 @@ Marp 演示文稿提交前 QA 加导出 PDF，由 repo 根目录的 `marp_export
 /marp-export /path/to/file.md
 ```
 
+想要连大纲、用说的修改和三视角审稿一起做，请看 [AI Slide Maker](https://github.com/yyu0310/ai-slide-maker)。
+
 ---
 
 ### `/open-source-skill`

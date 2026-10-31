@@ -151,6 +151,8 @@ Requires: Node.js and Python 3
 /marp-export /path/to/file.md
 ```
 
+Want outlines, plain-language edits and a three-reader review as well? See [AI Slide Maker](https://github.com/yyu0310/ai-slide-maker).
+
 ---
 
 ### `/open-source-skill`
