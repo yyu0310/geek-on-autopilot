@@ -29,6 +29,7 @@ import subprocess
 import sys
 import tempfile
 import time
+import urllib.parse
 
 VERSION = "1.1.0"
 DEFAULT_TIMEOUT = 300
@@ -104,8 +105,8 @@ def cmd_qa(path):
             if url.startswith("http://") or url.startswith("https://"):
                 remote.append((i + 1, url))
                 continue
-            img_path = url if os.path.isabs(url) else os.path.join(md_dir, url)
-            if not os.path.isfile(img_path):
+            # A path with spaces is often written with %20, so accept the decoded form too. Try the literal path first: a file name can contain %20.
+            if not any(os.path.isfile(os.path.join(md_dir, p)) for p in (url, urllib.parse.unquote(url))):
                 missing.append((i + 1, url))
 
     for lineno, url in remote:
@@ -249,6 +250,18 @@ def run_selftest():
         write(space_md, '# Title\n\n![alt](my assets/pic one.png "caption")\n')
         check("qa image path with spaces and title suffix -> exit 0", cmd_qa(space_md) == 0)
 
+        # qa: percent-encoded path (%20 for spaces) must resolve to the real file
+        encoded_md = os.path.join(tmp, "encoded_img.md")
+        write(encoded_md, "# Title\n\n![alt](my%20assets/pic%20one.png)\n")
+        check("qa percent-encoded image path -> exit 0", cmd_qa(encoded_md) == 0)
+
+        # qa: a file name that literally contains %20 must still resolve
+        with open(os.path.join(tmp, "a%20b.png"), "wb") as f:
+            f.write(b"\x89PNG fake")
+        literal_md = os.path.join(tmp, "literal_pct.md")
+        write(literal_md, "# Title\n\n![alt](a%20b.png)\n")
+        check("qa file name containing a literal %20 -> exit 0", cmd_qa(literal_md) == 0)
+
         # qa: no images
         no_img_md = os.path.join(tmp, "no_img.md")
         write(no_img_md, "# Title\n\nPlain text, no images\n")
@@ -282,6 +295,12 @@ def run_selftest():
 
         os.utime(v_pdf, (now + 100, now + 100))
         check("verify all pass -> exit 0", cmd_verify(v_md) == 0)
+
+    # find_npx: the return shape must be consistent, either (None, None) or (path, that path's directory)
+    npx_path, npx_dir = find_npx()
+    check("find_npx return shape is consistent",
+          (npx_path is None and npx_dir is None)
+          or (npx_path is not None and npx_dir == os.path.dirname(npx_path)))
 
     log("[SKIP] real npx export is a manual check (first run downloads the package)")
 
