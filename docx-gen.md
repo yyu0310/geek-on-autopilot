@@ -66,4 +66,6 @@ Check these when something fails:
 - Poppler (`pdffonts`, `pdftotext`, `pdftoppm`): `brew install poppler`
 - PingFang TC ships with macOS. On other systems set `CJK_FONT` in your script to a CJK font you have installed. The font check only rejects known handwriting and decorative fonts
 
+**Exact fonts are not guaranteed.** LibreOffice on macOS picks CJK fonts non-deterministically, so the same `.docx` can come out with different fonts on each conversion, sometimes within one PDF. The font QA and retries reject handwriting and decorative fonts, but they can't promise the exact font you named. If you need a specific font, export from Word or Pages.
+
 Exit codes for the scripts: 0 success, 2 external command or network failure, 3 file not found, 4 hard gate failed, 5 missing dependency.
