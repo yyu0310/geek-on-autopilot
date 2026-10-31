@@ -21,14 +21,14 @@ Core principles (same as `/latest`):
 
 | Company / product | Official blog / news | Official docs | Official X | Notes |
 |---|---|---|---|---|
-| **xAI / Grok** | https://x.ai/news | https://docs.x.ai | xai, grok | Grok product news often lands on X first |
+| **xAI / Grok / Grok Build** | https://x.ai/news | https://docs.x.ai | grok, grokbuild, SpaceXAI | Grok product news often lands on X first. xAI has been folded into SpaceX, and recent official statements mostly come from the SpaceXAI account. Grok Build release notes: https://x.ai/build/changelog; the CLI also ships official docs locally, which you can grep offline |
 | **OpenAI / ChatGPT / Codex** | https://openai.com/news/ | https://platform.openai.com/docs | OpenAI, OpenAIDevs | ChatGPT release notes: search "release notes" on help.openai.com. Codex: openai.com/codex |
-| **Google / Gemini** | https://blog.google/technology/ai/ and https://deepmind.google/discover/blog/ | https://ai.google.dev | GoogleDeepMind, GoogleAIStudio | Docs cover the Gemini API. The agentic IDE Antigravity lives at https://antigravity.google |
+| **Google / Gemini / Antigravity** | https://blog.google/technology/ai/ and https://deepmind.google/discover/blog/ | https://ai.google.dev | GoogleDeepMind, GoogleAIStudio | Docs cover the Gemini API. The agentic IDE Antigravity lives at https://antigravity.google |
 | **DeepSeek** | https://api-docs.deepseek.com/news | https://api-docs.deepseek.com | deepseek_ai | Model releases mostly appear on GitHub and X |
-| **Apple** | https://www.apple.com/newsroom/ and https://machinelearning.apple.com | none | Apple | Apple Intelligence and Siri news mostly comes through the Newsroom and WWDC |
+| **Apple / Siri AI** | https://www.apple.com/newsroom/ and https://machinelearning.apple.com | none | Apple | Apple Intelligence and Siri news mostly comes through the Newsroom and WWDC |
 | **Qwen / Alibaba** | https://qwenlm.github.io/blog/ | https://help.aliyun.com | Alibaba_Qwen | Docs cover the Bailian / DashScope API. Chat entry point: chat.qwen.ai |
 | **Zhipu Z.ai / GLM** | https://z.ai/blog | https://docs.z.ai | Zai_org | Open weights on Hugging Face under `zai-org` |
-| **Meta AI** | https://ai.meta.com/blog/ and https://llama.com | none | AIatMeta | Covers Meta's model families and open-weight releases |
+| **Meta AI** | https://ai.meta.com/blog/ and https://llama.com | none | AIatMeta | Covers Meta's model families and open-weight releases, including Muse Spark (agentic coding, paid API) and the Llama series |
 | **Cross-vendor comparison sites** | Artificial Analysis https://artificialanalysis.ai, Hugging Face Open LLM Leaderboard, Epoch AI https://epoch.ai | none | ArtificialAnlys | Use these for cross-vendor capability and price-performance comparisons |
 
 ### Tier 2: check when clearly relevant, or when the weekly roundup has news
@@ -41,6 +41,21 @@ Core principles (same as `/latest`):
 | **Manus** | https://manus.im/blog | ManusAI_HQ |
 | **Cursor** | https://cursor.com/changelog and https://cursor.com/blog | cursor_ai |
 | **Perplexity** | https://www.perplexity.ai/hub/blog | perplexity_ai |
+
+## Known fetch failures (observed October 2026; if you hit one, don't retry)
+
+| Source | Symptom | Use instead |
+|---|---|---|
+| openai.com/news/ | WebFetch returns 403 | WebSearch restricted to openai.com |
+| x.ai/news | WebFetch returns 403 | WebSearch restricted to x.ai |
+| qwenlm.github.io/blog/ | WebFetch returns stale 2025 content, not the current page | Find the date through a third-party release tracker, then confirm on the primary source |
+| ai.meta.com/blog/ | Latest post stops at July 2026 | Same as above, or check llama.com |
+| z.ai/blog | Returns 404 | WebSearch restricted to z.ai. Open weights are on Hugging Face under `zai-org` |
+| apple.com/newsroom/ | WebFetch gets only the navigation shell, no articles | WebSearch restricted to apple.com/newsroom |
+
+This table goes stale. Re-check before trusting it.
+
+**Assertion discipline.** Keep "what my tools can see" separate from "what the vendor actually ships". A model list inside a CLI reflects your account, plan, and quota, not the vendor's product line. When something looks missing ("vendor X has no Y"), first ask whether permissions, plan, quota, or version explain it, then draw the conclusion.
 
 ## Steps
 
