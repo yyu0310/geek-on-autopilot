@@ -7,7 +7,7 @@ Fifteen custom slash commands for Claude Code users who want to reduce friction 
 ## Commands
 
 - [/latest](latest.md): Forces web search before answering time-sensitive questions. Treats training data as a stale candidate, not a conclusion. Prioritizes official docs over generic search results.
-- [/claude-docs](claude-docs.md): Routes questions to the correct Claude official docs page. Routing table covers 20+ topics with direct URLs. Distinguishes between feature questions (docs) and availability questions (news + web search).
+- [/latest-claude](latest-claude.md): Routes questions to the correct Claude official docs page. Routing table covers 20+ topics with direct URLs. Distinguishes between feature questions (docs) and availability questions (news + web search).
 - [/latest-ai](latest-ai.md): Answers questions about AI vendors other than Claude from official docs, news pages, and changelogs. With no question, compiles a past-week product roundup.
 - [/no-ai-trace](no-ai-trace.md): Scans text against 17 AI writing anti-patterns (buzzword stacking, negation openers, em dashes and semicolons, rhetorical self-answers, etc.). Reports each violation with suggested rewrite, then gives an overall tone verdict.
 - [/no-ai-trace-lite](no-ai-trace-lite.md): Lightweight self-check for internal documents. 3 mechanical greps and 4 quick semantic scans.

@@ -24,7 +24,7 @@ Fifteen custom slash commands that make Claude Code more useful.
 | Command | What it does |
 |---|---|
 | `/latest` | Forces web search before answering any time-sensitive question |
-| `/claude-docs` | Routes directly to the right Claude docs page, with source URL |
+| `/latest-claude` | Routes directly to the right Claude docs page, with source URL |
 | `/latest-ai` | Answers questions about AI vendors other than Claude from official sources, or compiles a past-week roundup |
 | `/no-ai-trace` | Scans text against 17 AI writing anti-patterns |
 | `/no-ai-trace-lite` | Fast 3-grep, 4-scan check for internal documents |
@@ -59,7 +59,9 @@ Or install only what you need:
 ln -sf "$(pwd)/latest.md" ~/.claude/commands/latest.md
 ```
 
-After installing, type `/latest`, `/claude-docs`, etc. in Claude Code to use them.
+After installing, type `/latest`, `/latest-claude`, etc. in Claude Code to use them.
+
+**Upgrading:** `/claude-docs` is now `/latest-claude`. Remove the old `claude-docs.md` link from `~/.claude/commands/` and link `latest-claude.md` instead.
 
 Several commands call a script in the repo root (`md2pdf.py`, `marp_export.py`, `ref_audit.py`, `relink.py`, `docx_pdf.py`, `cf_private_site.py`, `site_lock_check.sh`). Keep the clone in place, since the commands run those scripts from it.
 
@@ -75,20 +77,20 @@ Forces a web search before answering questions with a time-sensitive answer. AI 
 
 ---
 
-### `/claude-docs`
+### `/latest-claude`
 
 Routes to the right Claude official docs page based on your question, with source URL. The routing table covers 20+ topics: API parameters, model specs, Prompt Caching, Tool Use, MCP, Agent Skills, and more.
 
 ```
-/claude-docs how does prompt caching work?
-/claude-docs latest available models
+/latest-claude how does prompt caching work?
+/latest-claude latest available models
 ```
 
 ---
 
 ### `/latest-ai`
 
-Answers frontier-AI questions from each vendor's official docs, news pages, and changelogs instead of training data. `/claude-docs` covers Claude. `/latest-ai` covers every other vendor and cross-vendor roundups. Given a question, it routes to the relevant company's official sources. With no question, it compiles the past week's product updates, scanning the major vendors first.
+Answers frontier-AI questions from each vendor's official docs, news pages, and changelogs instead of training data. `/latest-claude` covers Claude. `/latest-ai` covers every other vendor and cross-vendor roundups. Given a question, it routes to the relevant company's official sources. With no question, it compiles the past week's product updates, scanning the major vendors first.
 
 ```
 /latest-ai did OpenAI change its API pricing this month?

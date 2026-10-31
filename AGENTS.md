@@ -12,7 +12,7 @@ Each `.md` file in the root becomes a `/command-name` slash command when symlink
 
 **No machine-specific paths.** All references use generic descriptions ("the currently open file in IDE") or user-supplied paths. Nothing hardcoded to a specific machine.
 
-**Language.** English is canonical in the repo root; each command's Traditional Chinese (zh-TW) translation lives in `zh/` with the same filename. The root English file is what installs as the `/command` and shows in `/help`, so it's the front door for international users; `zh/` serves zh-TW/zh-CN readers and anyone who wants to run a command in Chinese. When editing a command, update both the root file and its `zh/` counterpart. The `claude-docs.md` routing table targets English-language official docs because that's where Claude's documentation lives.
+**Language.** English is canonical in the repo root; each command's Traditional Chinese (zh-TW) translation lives in `zh/` with the same filename. The root English file is what installs as the `/command` and shows in `/help`, so it's the front door for international users; `zh/` serves zh-TW/zh-CN readers and anyone who wants to run a command in Chinese. When editing a command, update both the root file and its `zh/` counterpart. The `latest-claude.md` routing table targets English-language official docs because that's where Claude's documentation lives.
 
 **Scripts.** Five commands ship scripts in the repo root, and each command file calls them by relative path:
 
@@ -32,7 +32,7 @@ A helper prompt or template that a command needs (like the review prompt in `pri
 
 - Do not add file path dependencies that point to a specific machine. If a command needs external data, embed it inline.
 - `no-ai-trace.md` Rules 1 to 17, Part 2 rewrites, and the self-check list must stay in sync (in both the root English file and `zh/no-ai-trace.md`). If you add a rule, add the corresponding rewrite example and self-check item to both.
-- `claude-docs.md` routing table URLs should only be updated when official Claude docs URLs actually change. Verify against `https://platform.claude.com/llms.txt` before updating.
+- `latest-claude.md` routing table URLs should only be updated when official Claude docs URLs actually change. Verify against `https://platform.claude.com/llms.txt` before updating.
 
 ## Adding a new command
 

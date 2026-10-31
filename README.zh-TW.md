@@ -24,7 +24,7 @@
 | 指令 | 功能 |
 |---|---|
 | `/latest` | 強制網搜，禁止只靠訓練資料回答時效問題 |
-| `/claude-docs` | 路由直達 Claude 官方文件，附來源 URL |
+| `/latest-claude` | 路由直達 Claude 官方文件，附來源 URL |
 | `/latest-ai` | 查 Claude 以外的 AI 廠商官方消息，或整理近一週更新 |
 | `/no-ai-trace` | 掃描 AI 寫作痕跡，17 條規則逐條檢查 |
 | `/no-ai-trace-lite` | 內部文件用，3 項 grep 加 4 項快掃 |
@@ -59,7 +59,9 @@ done
 ln -sf "$(pwd)/latest.md" ~/.claude/commands/latest.md
 ```
 
-安裝後在 Claude Code 輸入 `/latest`、`/claude-docs` 等即可使用。
+安裝後在 Claude Code 輸入 `/latest`、`/latest-claude` 等即可使用。
+
+**升級提醒：** `/claude-docs` 已改名為 `/latest-claude`。請刪掉 `~/.claude/commands/` 裡舊的 `claude-docs.md` 連結，改連 `latest-claude.md`。
 
 有幾個指令會呼叫 repo 根目錄的腳本（`md2pdf.py`、`marp_export.py`、`ref_audit.py`、`relink.py`、`docx_pdf.py`、`cf_private_site.py`、`site_lock_check.sh`），clone 下來的資料夾請留在原位，指令會從那裡執行腳本。
 
@@ -75,20 +77,20 @@ ln -sf "$(pwd)/latest.md" ~/.claude/commands/latest.md
 
 ---
 
-### `/claude-docs`
+### `/latest-claude`
 
 根據問題類型，直接取得對應的 Claude 官方文件頁面，附來源 URL。路由表涵蓋 API 參數、模型規格、Prompt Caching、Tool Use、MCP、Agent Skills 等 20+ 個主題。
 
 ```
-/claude-docs prompt caching 怎麼用？
-/claude-docs 最新模型有哪些？
+/latest-claude prompt caching 怎麼用？
+/latest-claude 最新模型有哪些？
 ```
 
 ---
 
 ### `/latest-ai`
 
-從各家 AI 公司的官方文件、新聞頁與更新日誌回答前沿 AI 問題，不靠訓練資料。`/claude-docs` 管 Claude，`/latest-ai` 管其他所有廠商與跨家彙整。給問題就路由到相關公司的官方來源，不給問題就整理近一週的產品更新，先掃主要廠商。
+從各家 AI 公司的官方文件、新聞頁與更新日誌回答前沿 AI 問題，不靠訓練資料。`/latest-claude` 管 Claude，`/latest-ai` 管其他所有廠商與跨家彙整。給問題就路由到相關公司的官方來源，不給問題就整理近一週的產品更新，先掃主要廠商。
 
 ```
 /latest-ai OpenAI 這個月有調整 API 價格嗎？
