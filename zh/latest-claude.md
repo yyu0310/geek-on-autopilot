@@ -1,10 +1,10 @@
-查詢 Claude 官方文件，回答關於 Claude 功能、API、模型、參數的問題。
+查詢 Claude 官方文件，回答關於 Claude 功能、API、模型、參數的問題。舊名 `/claude-docs`。
 
 官方文件網域：https://platform.claude.com/docs/en/
 
 用法：
-- `/claude-docs [問題]`：查詢指定問題
-- `/claude-docs`：沒有問題時，根據對話上下文判斷要查什麼
+- `/latest-claude [問題]`：查詢指定問題
+- `/latest-claude`：沒有問題時，根據對話上下文判斷要查什麼
 
 步驟：
 

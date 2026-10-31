@@ -3,7 +3,7 @@ name: latest-ai
 description: 從各家 AI 公司的官方文件、官方消息與 changelog 抓一手資訊，回答 AI 前沿問題或彙整近一週產品更新。
 ---
 
-專門從各家 AI 公司的一手官方來源（官方文件、blog、release notes、官方 X 帳號）抓資訊，回答 AI 前沿問題或彙整近期產品動態。它和兩個同系列指令並列：`/latest` 管通用的時效搜尋，`/claude-docs` 專管 Claude，`/latest-ai` 管其他各家與跨家彙整。這支只看下面清單裡的公司，且一律回到一手來源。
+專門從各家 AI 公司的一手官方來源（官方文件、blog、release notes、官方 X 帳號）抓資訊，回答 AI 前沿問題或彙整近期產品動態。它和兩個同系列指令並列：`/latest` 管通用的時效搜尋，`/latest-claude` 專管 Claude，`/latest-ai` 管其他各家與跨家彙整。這支只看下面清單裡的公司，且一律回到一手來源。
 
 用法：
 - `/latest-ai [問題]`：鎖定相關公司的官方來源查答案，最常見。
@@ -12,7 +12,7 @@ description: 從各家 AI 公司的官方文件、官方消息與 changelog 抓�
 核心原則（同 `/latest`）：
 - 訓練資料有截止日，AI 領域每週都在變。腦中的答案一律當**過時候選**，自認知道也要先查再答。
 - 只認一手來源：官方文件、官方 blog、release notes、官方 X 帳號、官方 GitHub。二手來源（新聞、論壇、教學）只補充背景，結論要回到一手來源確認。
-- 如果問題其實是 Claude 自家功能，改用 `/claude-docs`。
+- 如果問題其實是 Claude 自家功能，改用 `/latest-claude`。
 - 下表 URL 可能改版。遇到 404 或明顯過時，先 WebSearch `[公司名] official blog` 或 `[公司名] official docs` 重新定位，再更新這張表。
 
 ## 公司來源路由表
