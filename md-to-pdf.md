@@ -45,11 +45,11 @@ Known pitfalls:
 
 1. **LibreOffice picks CJK fonts at random on macOS.** The same docx can come out in a different font on each run, and the template's font name doesn't matter. The script converts several copies in parallel, checks each with `pdffonts`, and keeps the first one where every font is PingFang TC, retrying up to 20 rounds. It takes about 15 seconds on average and up to about 45 seconds in the worst case. Don't switch to a manual conversion. Verify with `pdffonts file.pdf` if you ever convert by hand, and redo it when the fonts are wrong.
 
-2. **A single Enter is a line break.** The script calls `pandoc -f markdown+hard_line_breaks`, and it strips trailing backslashes from a temporary copy first so old files don't get double breaks. The original file is never modified.
+2. **A single Enter is a line break.** The script calls `pandoc -f markdown+hard_line_breaks` with the flag from pitfall 4, and it strips trailing backslashes from a temporary copy first so old files don't get double breaks. The original file is never modified.
 
 3. **Don't put a caption in `![caption](path)` on its own line.** Pandoc turns it into a Figure and the caption gets the Image Caption style, which has no CJK font. Font QA then fails on every attempt. Write the caption as a normal text line and put `![](path){width=85%}` on the very next line with no blank line between. Image paths resolve from the current working directory, so `cd` to the .md folder first.
 
-4. **Paired `$` signs are read as LaTeX math.** Text like `$AAPL and $MSFT` becomes italic serif math with a fallback font, and font QA fails every round. Escape each one as `\$` in a scratch copy, for example `sed -i '' 's/\$/\\$/g'`. The PDF looks the same and the original stays untouched. To confirm the cause, run `unzip -p file.docx word/document.xml | grep -o '<m:oMath>' | wc -l`. A result above 0 means math was detected.
+4. **Paired `$` signs are not read as LaTeX math.** The script runs pandoc with `-tex_math_dollars`, so text like `$AAPL and $MSFT` or `NT$18 ... NT$6` stays plain text. LaTeX math is not supported. Without that flag the span between two `$` becomes italic serif math with a fallback font, and font QA fails every round. If you run pandoc by hand, pass `-f markdown+hard_line_breaks-tex_math_dollars`. To check a .docx for leftover math, run `unzip -p file.docx word/document.xml | grep -o '<m:oMath>' | wc -l`. A result above 0 means math was detected.
 
 5. **Exit 5 is often a PATH problem.** Claude Code's shell frequently lacks `/opt/homebrew/bin`, so tools that are installed look missing. Run `export PATH="/opt/homebrew/bin:$PATH"` and retry. Only treat the tool as missing if `ls /opt/homebrew/bin` doesn't list it.
 

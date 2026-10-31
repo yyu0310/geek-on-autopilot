@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """md2pdf.py: Markdown to PDF converter with PingFang TC font QA (macOS).
 
-Pipeline: pandoc (markdown+hard_line_breaks, reference docx) -> LibreOffice headless -> pdffonts check.
+Pipeline: pandoc (markdown+hard_line_breaks-tex_math_dollars, reference docx) -> LibreOffice headless -> pdffonts check.
 
 Subcommands:
   lint <file.md>
@@ -105,6 +105,11 @@ BAD_FONT_PATTERNS = [
 ]
 
 TRAILING_BACKSLASH_RE = re.compile(r"\\\n")
+
+# pandoc input format: a single Enter becomes a line break, and paired $ signs are not math.
+# Without -tex_math_dollars, text like "NT$1.8 ... NT$6" is parsed as inline LaTeX, rendered in
+# italics, and the CJK text falls back to a serif font, so the font whitelist can never pass.
+PANDOC_FROM = "markdown+hard_line_breaks-tex_math_dollars"
 
 
 def log(msg):
@@ -449,10 +454,10 @@ def cmd_convert(path, keep_docx=False, outdir=None, ref_docx=None, soffice=None,
         f.write(strip_trailing_hard_breaks(src_text))
 
     try:
-        log(f"Step 1/2: pandoc {path} -> {docx_path} (markdown+hard_line_breaks: a single Enter is a line break)")
+        log(f"Step 1/2: pandoc {path} -> {docx_path} ({PANDOC_FROM}: a single Enter is a line break, $ is not math)")
         try:
             r = subprocess.run(
-                ["pandoc", "-f", "markdown+hard_line_breaks", tmp_md_path,
+                ["pandoc", "-f", PANDOC_FROM, tmp_md_path,
                  f"--reference-doc={ref_docx}", "-o", docx_path],
                 capture_output=True, text=True, timeout=timeout,
             )
@@ -478,7 +483,6 @@ def cmd_convert(path, keep_docx=False, outdir=None, ref_docx=None, soffice=None,
             f"where every font is PingFang TC. Kept {docx_path}. "
             "If every attempt lists Menlo, a symbol in the text has no PingFang TC glyph: "
             "remove or replace it in a scratch copy. "
-            "If the text has paired $ signs, escape them as \\$ (pandoc reads $...$ as math). "
             "Otherwise just rerun convert.")
         return 4
 
@@ -657,6 +661,12 @@ def run_selftest():
 
         # real conversions, only when every dependency is present
         soffice, ref, pf = find_soffice(), find_ref_docx(), shutil.which("pdffonts")
+        # a pair of $ signs must not be parsed as math (kept in the original CJK to match the real use case)
+        if shutil.which("pandoc"):
+            nat = subprocess.run(["pandoc", "-f", PANDOC_FROM, "-t", "native"],
+                                 input="價格 NT$18 元，折扣後 NT$6 元", capture_output=True, text=True).stdout
+            check("PANDOC_FROM: paired NT$ is not parsed as Math", "Math" not in nat and "NT$18" in nat)
+
         if shutil.which("pandoc") and os.path.exists(soffice) and os.path.exists(ref) and pf:
             stem = os.path.join(tmp, "mixed 中文 name")
             code = cmd_convert(valid_md)
