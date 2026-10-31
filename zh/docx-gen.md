@@ -66,4 +66,6 @@ cd docx-gen-tools && npm install
 - Poppler（`pdffonts`、`pdftotext`、`pdftoppm`）：`brew install poppler`
 - PingFang TC 為 macOS 內建。其他系統請把腳本裡的 `CJK_FONT` 改成你已安裝的 CJK 字體；字體檢查只會擋已知的手寫體與裝飾體
 
+**不保證輸出精確字體。** macOS 上的 LibreOffice 挑 CJK 字體不固定，同一份 `.docx` 每次轉出的字體可能不同，同一份 PDF 內也可能混用。字體檢查和重試只會擋手寫體與裝飾體，無法保證一定是你指定的字體。需要精確字體就改從 Word 或 Pages 匯出。
+
 腳本 exit code 慣例：0 成功／2 外部指令或網路失敗／3 檔案不存在／4 硬門檻失敗／5 缺少相依工具。
